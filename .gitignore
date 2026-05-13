@@ -16,18 +16,19 @@
 *.ilg
 *.ind
 
-## PDFs compilados (exceto o servido pelo Vercel)
+## PDFs compilados localmente (NÃO versionar — o CI cuida disso)
 main.pdf
-*.pdf
-!public/relatorio.pdf
+
+## Exceções: arquivos versionados intencionalmente
+!public/main.pdf
+!public/last_build.txt
 !relatorio1/carta_empresa.pdf
 !relatorio1/artigo_referencia.pdf
 
-## Editor files
+## Editor / SO
 .DS_Store
 Thumbs.db
 *.swp
-*.swo
 *~
 .vscode/
 .idea/
