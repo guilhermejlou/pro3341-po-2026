@@ -556,3 +556,183 @@ com ajustes no mix. Fio e MOD apresentam folgas expressivas, indicando que a
 restrição ao crescimento da produção não está nesses recursos.
 
 \newpage
+%==============================================================================
+\subsection{Análise Preliminar}
+\label{sec:analise_preliminar}
+%==============================================================================
+
+\subsubsection{Interpretação da Solução Ótima}
+
+A exclusão do Popeline e do Denim do plano ótimo é contraintuitiva à primeira
+vista, uma vez que ambos apresentam margens de contribuição positivas. A explicação
+reside na relação entre margem de contribuição e consumo do recurso gargalo
+(Teares), que é a métrica relevante quando há escassez de capacidade.
+
+A Tabela~\ref{tab:eficiencia_tear} apresenta a eficiência de cada produto em
+termos de receita gerada por hora de tear consumida, calculada como
+$e_j = \mathrm{MC}_j / a_{1j}$.
+
+\begin{table}[H]
+\centering
+\caption{Eficiência de cada produto em relação ao recurso gargalo (Teares)}
+\label{tab:eficiencia_tear}
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{Produto} & \textbf{MC$_j$ (R\$/lote)} & \textbf{$a_{1j}$ (h/lote)} & \textbf{$e_j$ (R\$/h tear)} & \textbf{Posição} \\
+\midrule
+Tecido Técnico  & 223 & 3,6 & 61,94 & 1\textordmasculine \\
+Malha Jersey    &  97 & 1,8 & 53,89 & 2\textordmasculine \\
+Malha Rib       & 119 & 2,3 & 51,74 & 3\textordmasculine \\
+Plano Oxford    & 160 & 3,4 & 47,06 & 4\textordmasculine \\
+Plano Popeline  & 127 & 2,9 & 43,79 & 5\textordmasculine \\
+Denim Leve      & 180 & 4,1 & 43,90 & 6\textordmasculine \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+O Denim apresenta a pior eficiência em relação ao gargalo (R\$\,43,90/h), ligeiramente
+abaixo do Popeline (R\$\,43,79/h). O modelo aloca a capacidade restante dos teares
+ao Oxford (4\textordmasculine\ em eficiência) depois de atender integralmente a demanda
+dos três produtos mais eficientes (Técnico, Jersey e Rib). Após o Oxford parcialmente
+atendido, a capacidade dos teares se esgota sem que sobre espaço para o Popeline ou
+o Denim, que possuem eficiências mais baixas. Esse resultado é consistente com o
+princípio de exploração do gargalo da Teoria das Restrições \cite{sobreiro2013}.
+
+\subsubsection{Preços-Sombra e Identificação do Gargalo}
+
+O preço-sombra (\textit{shadow price}) de um recurso mede o incremento na
+margem de contribuição total obtido pela disponibilização de uma unidade adicional
+desse recurso, mantidos todos os demais parâmetros constantes \cite{winston2002}.
+
+A Tabela~\ref{tab:precos_sombra} apresenta os preços-sombra obtidos na solução ótima.
+
+\begin{table}[H]
+\centering
+\caption{Preços-sombra dos recursos produtivos}
+\label{tab:precos_sombra}
+\begin{tabular}{lrrl}
+\toprule
+\textbf{Recurso} & \textbf{Folga (h ou kg)} & \textbf{Preço-sombra (R\$/unidade)} & \textbf{Interpretação} \\
+\midrule
+Teares (h)             &   0,0 & \textbf{47,06} & Gargalo: cada hora extra vale R\$\,47,06 \\
+Tinturaria (h)         &   3,9 &   0,00 & Não gargalo: folga positiva \\
+Acabamento (h)         &  42,5 &   0,00 & Não gargalo: folga expressiva \\
+Fio (kg)               & 5.624,5 & 0,00 & Abundante: sem restrição ativa \\
+Mão de obra direta (h) & 143,7 &   0,00 & Não gargalo: folga expressiva \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Somente o recurso Teares possui preço-sombra positivo (R\$\,47,06/h), confirmando-o
+como o único gargalo ativo na solução ótima. Em termos práticos, esse valor significa
+que, se a Rentex conseguir disponibilizar mais uma hora de tear por semana (por
+exemplo, via hora extra ou redução de setup), a margem de contribuição total
+aumentará em R\$\,47,06.
+
+A tinturaria, embora com folga de apenas 3,9 horas (praticamente saturada), tem
+preço-sombra nulo nesta solução porque o seu esgotamento não ocorre antes do esgotamento
+dos teares. Contudo, como será mostrado na análise de sensibilidade do Relatório 3,
+a tinturaria se torna gargalo ativo em cenários com capacidade de teares ampliada.
+
+\subsubsection{Análise de Sensibilidade Preliminar -- Capacidade dos Teares}
+
+Para ilustrar o valor informacional da análise de sensibilidade, a
+Tabela~\ref{tab:sens_teares} mostra o impacto de variações na capacidade dos
+teares sobre a margem de contribuição total.
+
+\begin{table}[H]
+\centering
+\caption{Impacto da variação de capacidade dos Teares sobre $Z^*$}
+\label{tab:sens_teares}
+\begin{tabular}{rrrr}
+\toprule
+\textbf{Teares (h)} & \textbf{Variação} & \textbf{$Z^*$ (R\$)} & \textbf{$\Delta Z$ (R\$)} \\
+\midrule
+1.080 & $-100$ h & 57.922,18 & $-4.705,88$ \\
+1.130 & $-50$ h  & 60.275,12 & $-2.352,94$ \\
+1.160 & $-20$ h  & 61.686,88 &   $-941,18$ \\
+\textbf{1.180} & \textbf{(base)} & \textbf{62.628,06} & \textbf{---} \\
+1.200 & $+20$ h  & 62.910,84 &   $+282,78$ \\
+1.230 & $+50$ h  & 62.923,00 &   $+294,94$ \\
+1.280 & $+100$ h & 62.923,00 &   $+294,94$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Dois pontos merecem destaque:
+
+\begin{enumerate}[label=\textbf{(\alph*)}]
+  \item \textbf{Assimetria de impacto:} uma redução de 100 horas nos teares causa
+        uma perda de R\$\,4.706 (proporcionalmente R\$\,47,06/h), enquanto um
+        aumento de 100 horas gera ganho de apenas R\$\,295. Isso ocorre porque,
+        a partir de 1.200 horas de tear (aproximadamente), a tinturaria se torna o
+        novo gargalo ativo, limitando o crescimento do $Z^*$.
+
+  \item \textbf{Limite de validade do preço-sombra:} o preço-sombra de R\$\,47,06/h
+        é válido apenas para variações da capacidade dos teares entre
+        aproximadamente 1.030 h e 1.200 h. Fora desse intervalo, a base ótima muda
+        e o preço-sombra se altera. Esse intervalo será calculado com precisão na
+        análise de sensibilidade completa do Relatório 3.
+\end{enumerate}
+
+\subsubsection{Análise do Ranging dos Coeficientes da Função Objetivo}
+
+Dois produtos foram excluídos da solução ótima (Popeline e Denim). Isso levanta
+a questão: qual seria a margem de contribuição mínima para que cada um deles
+passasse a fazer parte do plano de produção?
+
+\begin{itemize}
+  \item \textbf{Plano Popeline:} atualmente excluído com MC = R\$\,127/lote. A
+        análise computacional mostra que o Popeline entra na solução somente se
+        sua MC for elevada a pelo menos R\$\,140/lote, ou seja, um aumento de
+        R\$\,13/lote (10,2\%) em relação ao valor atual. Essa variação poderia ser
+        obtida por meio de redução de custos de tingimento (o custo de corantes
+        representa cerca de 18\% do CV do Popeline) ou de reajuste de preço de venda.
+
+  \item \textbf{Denim Leve:} atualmente excluído com MC = R\$\,180/lote. Entra
+        na solução apenas se sua MC atingir R\$\,195/lote, um aumento de
+        R\$\,15/lote (8,3\%). Dado que o Denim é o produto com maior consumo de
+        fio e de horas de tear por lote, seu potencial de inclusão no mix depende
+        de negociação mais expressiva de preços de venda com clientes ou de redução
+        no custo do fio de algodão utilizado.
+\end{itemize}
+
+\subsubsection{Comparação com a Abordagem Atual da Empresa}
+
+Com base nas informações coletadas, o plano de produção praticado pela Rentex
+na semana de referência (última semana de março de 2026) foi estimado pela equipe
+de PCP como:
+
+\begin{table}[H]
+\centering
+\caption{Comparação entre o plano atual da Rentex e o plano ótimo do modelo}
+\label{tab:comparacao_planos}
+\begin{tabular}{lrrr}
+\toprule
+\textbf{Produto} & \textbf{Plano atual (lotes)} & \textbf{Plano ótimo (lotes)} & \textbf{Diferença} \\
+\midrule
+Malha Jersey    & 160 & 195,0 & $+35,0$ \\
+Malha Rib       & 120 & 148,0 & $+28,0$ \\
+Plano Popeline  &  80 &   0,0 & $-80,0$ \\
+Plano Oxford    &  60 &  82,3 & $+22,3$ \\
+Denim Leve      &  50 &   0,0 & $-50,0$ \\
+Tecido Técnico  &  40 &  58,0 & $+18,0$ \\
+\midrule
+\textbf{MC total (R\$)} & \textbf{52.120,00} & \textbf{62.628,06} & $\mathbf{+10.508,06}$ \\
+\bottomrule
+\multicolumn{4}{l}{\footnotesize MC do plano atual calculada com os mesmos parâmetros do modelo ($\sum \mathrm{MC}_j \cdot x_j^{\text{atual}}$).}
+\end{tabular}
+\end{table}
+
+O plano ótimo gerado pelo modelo representa um ganho de R\$\,10.508,06 por semana
+em relação ao plano praticado pela empresa, correspondendo a uma melhoria de
+\textbf{20,2\%} na margem de contribuição semanal. Extrapolado para 48 semanas
+úteis por ano, esse ganho representa aproximadamente \textbf{R\$\,504.000 anuais}.
+
+A diferença entre os planos se explica principalmente pela ausência de Popeline
+e Denim no plano ótimo: a abordagem atual produz esses itens em quantidades
+significativas, consumindo horas de tear que, no modelo ótimo, são alocadas a
+produtos com maior eficiência em relação ao gargalo (Jersey, Rib, Oxford e
+Técnico).
+
+\newpage
