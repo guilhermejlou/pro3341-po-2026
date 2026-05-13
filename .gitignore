@@ -16,8 +16,12 @@
 *.ilg
 *.ind
 
-## Compiled PDF (opcional — remova esta linha se quiser versionar o PDF)
-# main.pdf
+## PDFs compilados (exceto o servido pelo Vercel)
+main.pdf
+*.pdf
+!public/relatorio.pdf
+!relatorio1/carta_empresa.pdf
+!relatorio1/artigo_referencia.pdf
 
 ## Editor files
 .DS_Store

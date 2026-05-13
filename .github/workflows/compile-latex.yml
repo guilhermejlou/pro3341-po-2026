@@ -1,0 +1,41 @@
+name: Compile LaTeX → PDF
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**.tex'
+      - '**.bib'
+      - '.github/workflows/compile-latex.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compile LaTeX
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          latexmk_use_lualatex: false
+          latexmk_shell_escape: true
+          extra_system_packages: "py3-pygments"
+          args: -pdf -interaction=nonstopmode -file-line-error
+
+      - name: Move PDF to public/
+        run: |
+          mkdir -p public
+          cp main.pdf public/relatorio.pdf
+          echo "✅ PDF compilado: $(du -h public/relatorio.pdf | cut -f1)"
+
+      - name: Commit PDF
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "ci: atualiza PDF compilado [skip ci]"
+          file_pattern: "public/relatorio.pdf"
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "github-actions[bot]@users.noreply.github.com"

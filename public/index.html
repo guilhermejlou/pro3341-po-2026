@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PRO3341 — Projeto PO 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #0f1117;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: #1a1d2e;
+      border-bottom: 1px solid #2d3748;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .badge {
+      background: #3b5bdb;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    header h1 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #e2e8f0;
+    }
+
+    header p {
+      font-size: 0.78rem;
+      color: #718096;
+      margin-top: 0.1rem;
+    }
+
+    .toolbar {
+      background: #1a1d2e;
+      border-bottom: 1px solid #2d3748;
+      padding: 0.5rem 2rem;
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 0.9rem;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+
+    .btn-primary {
+      background: #3b5bdb;
+      color: #fff;
+    }
+    .btn-primary:hover { background: #2f4ac7; }
+
+    .btn-ghost {
+      background: #2d3748;
+      color: #a0aec0;
+    }
+    .btn-ghost:hover { background: #3a4a5e; color: #e2e8f0; }
+
+    .divider { width: 1px; height: 1.4rem; background: #2d3748; margin: 0 0.25rem; }
+
+    .chip {
+      font-size: 0.72rem;
+      color: #718096;
+      padding: 0.25rem 0.6rem;
+      background: #1e2533;
+      border: 1px solid #2d3748;
+      border-radius: 20px;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem 2rem;
+    }
+
+    .viewer-wrap {
+      flex: 1;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #2d3748;
+      background: #fff;
+      min-height: 80vh;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 80vh;
+      border: none;
+      display: block;
+    }
+
+    .no-pdf {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      gap: 1rem;
+      color: #718096;
+    }
+
+    .no-pdf svg { opacity: 0.3; }
+    .no-pdf h2 { font-size: 1.1rem; color: #a0aec0; }
+    .no-pdf p  { font-size: 0.85rem; text-align: center; max-width: 360px; }
+
+    footer {
+      padding: 0.75rem 2rem;
+      font-size: 0.72rem;
+      color: #4a5568;
+      border-top: 1px solid #1a1d2e;
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <span class="badge">PRO3341</span>
+  <div>
+    <h1>Modelagem e Otimização de Sistemas de Produção</h1>
+    <p>Prof.ª Dra. Celma O. Ribeiro &nbsp;·&nbsp; 1º Semestre 2026 &nbsp;·&nbsp; Escola Politécnica — USP</p>
+  </div>
+</header>
+
+<div class="toolbar">
+  <a class="btn btn-primary" href="relatorio.pdf" download="relatorio_pro3341.pdf">
+    ⬇ Download PDF
+  </a>
+  <a class="btn btn-ghost" href="relatorio.pdf" target="_blank">
+    ↗ Abrir em nova aba
+  </a>
+  <div class="divider"></div>
+  <span class="chip" id="status">Carregando…</span>
+</div>
+
+<main>
+  <div class="viewer-wrap">
+    <iframe
+      id="pdf-frame"
+      src="relatorio.pdf"
+      title="Relatório PRO3341"
+    ></iframe>
+  </div>
+</main>
+
+<footer>
+  <span>PRO3341 · Projeto Prático 2026</span>
+  <span id="updated"></span>
+</footer>
+
+<script>
+  const frame = document.getElementById('pdf-frame');
+  const status = document.getElementById('status');
+
+  frame.addEventListener('load', () => {
+    status.textContent = '✓ PDF carregado';
+  });
+
+  frame.addEventListener('error', () => {
+    status.textContent = '⚠ PDF não encontrado — aguarde a próxima compilação';
+    document.querySelector('.viewer-wrap').innerHTML = `
+      <div class="no-pdf">
+        <svg width="64" height="64" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0
+               01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        <h2>PDF ainda não compilado</h2>
+        <p>O GitHub Actions compilará o LaTeX automaticamente após o próximo push. Recarregue a página em instantes.</p>
+      </div>`;
+  });
+
+  document.getElementById('updated').textContent =
+    'Atualizado: ' + new Date().toLocaleString('pt-BR');
+</script>
+
+</body>
+</html>
