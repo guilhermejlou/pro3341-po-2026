@@ -1,611 +1,193 @@
 %==============================================================================
-%  RELATÓRIO 1
-%  Entrega: 24/03/2026
+%  RELATÓRIO 1  —  Entregue em 24/03/2026
 %==============================================================================
 
-\section{Introdução}
+\section{Relatório 1: Caracterização da Empresa e do Problema}
 
-O presente relatório constitui a primeira etapa do projeto prático da disciplina
-PRO3341 -- Modelagem e Otimização de Sistemas de Produção. O objetivo do projeto
-é aplicar técnicas de Pesquisa Operacional a um problema real identificado em
-parceria com uma empresa, produzindo resultados quantitativamente embasados e
-comparáveis à prática vigente.
+\subsection{Sobre a Empresa}
 
-A empresa escolhida para o projeto é a Rentex Indústria Têxtil LTDA, fabricante
-de tecidos de malha e planos localizada no interior do estado de São Paulo. O
-problema proposto é a otimização do mix de produção semanal: determinar quais
-produtos fabricar e em que quantidade, respeitando as capacidades instaladas dos
-recursos produtivos, de modo a maximizar a margem de contribuição total.
+\subsubsection{Negócio}
 
-Este relatório apresenta a caracterização da empresa e de seu ambiente produtivo,
-a definição e justificativa do problema, uma concepção preliminar do modelo
-matemático e a revisão bibliográfica de suporte, que inclui um artigo indexado
-diretamente relacionado ao tema e a resolução de um exercício do livro-texto
-com auxílio de software de otimização.
+A Rentex é uma empresa brasileira do setor têxtil fundada em 1991, com sede na
+Rua João Antônio de Oliveira, 1083, no bairro de Mooca/Belenzinho, São Paulo,
+CEP 03111-001. Ao longo de mais de três décadas de operação, a empresa
+consolidou-se como fornecedora confiável para o segmento de vestuário e uniformes
+no mercado B2B nacional.
 
-%==============================================================================
-\section{Caracterização da Empresa}
-%==============================================================================
+Especializada na fabricação de \textbf{tecidos planos}, a Rentex produz principalmente
+sarjas e forros, atendendo a fabricantes de vestuário e empresas de uniformes que
+demandam materiais com desempenho, durabilidade e possibilidade de personalização.
+O portfólio inclui tecidos com diferentes composições -- misturas de algodão,
+poliéster e elastano -- desenvolvidos conforme as especificações de cada cliente.
 
-\subsection{Histórico e Atuação}
+Com aproximadamente 30 funcionários distribuídos em dois turnos, a empresa opera
+em regime de parceria de longo prazo com seus clientes, com foco em qualidade e
+pontualidade de entrega. O contato institucional para este projeto é Pedro
+Charmillot Silva, Diretor de Novos Negócios, cuja carta de aprovação encontra-se
+no Anexo A.
 
-A Rentex Indústria Têxtil LTDA é uma empresa de médio porte fundada na década de
-1990, com sede em Americana, SP, município historicamente reconhecido como polo
-têxtil brasileiro \cite{abit2023}. A empresa atua no segmento de tecidos para
-confecção, produzindo malhas e tecidos planos destinados a fabricantes de
-vestuário de médio e alto padrão nas regiões Sudeste e Sul do país.
+\subsubsection{Portfólio de Produtos}
 
-O contato institucional para o projeto é Pedro Charmillot Silva, Diretor de
-Novos Negócios, cuja carta de aprovação encontra-se em anexo a este relatório.
-
-\subsection{Portfólio de Produtos}
-
-O portfólio ativo da Rentex é composto por seis famílias de tecidos, cada uma
-com características distintas de processo, custo e posicionamento de mercado:
+O portfólio ativo da Rentex é composto por quatro famílias principais de tecidos:
 
 \begin{enumerate}[label=\textbf{(\arabic*)}]
-  \item \textbf{Malha Jersey} -- tecido de malha leve, utilizado em camisetas e
-        peças básicas de vestuário. É o produto de maior volume da empresa, com
-        demanda estável ao longo do ano.
+  \item \textbf{Sarja Barcelos (100\% algodão):} tecido plano de sarja convencional,
+        produzido inteiramente com fio de algodão cardado. É o produto de maior
+        volume da linha e atende clientes de uniformes e confecção básica.
+        Apresenta tempo de preparação de tear (setup) reduzido, mas margem de
+        contribuição unitária inferior à da Sarja Joy.
 
-  \item \textbf{Malha Rib} -- malha elástica com estrutura de canelado, empregada
-        em golas, punhos e peças esportivas. Exige ajuste mais preciso nos teares
-        circulares.
+  \item \textbf{Sarja Joy (mista poliéster/elastano):} sarja com composição mista
+        (aproximadamente 70\% algodão, 25\% poliéster e 5\% elastano), que confere
+        ao tecido maior resistência e toque diferenciado. Possui maior valor
+        agregado, porém exige tempos de setup significativamente maiores para
+        troca do urdume e da trama nos teares.
 
-  \item \textbf{Tecido Plano Popeline} -- tecido leve de algodão ou misto,
-        utilizado em camisas sociais e blusas. Requer processamento nos teares de
-        rapier e etapa completa de engomagem.
+  \item \textbf{Forro de Poliéster Padrão (100\% poliéster):} forro leve de
+        acabamento padronizado, utilizado no interior de roupas e bolsas. Produto
+        de alto volume, menor margem de contribuição e processo de produção rápido
+        e padronizado. Está sujeito a contratos de fornecimento de longo prazo com
+        clientes estratégicos, que impõem uma quantidade mínima semanal.
 
-  \item \textbf{Tecido Plano Oxford} -- variação mais encorpada do popeline, com
-        trama característica. Produto de maior valor agregado dentro dos planos,
-        voltado ao segmento de moda feminina.
-
-  \item \textbf{Denim Leve} -- tecido jeans de gramatura reduzida (abaixo de
-        $12$ oz/m²), produzido para calças e jaquetas de linha premium. Consome a
-        maior quantidade de fio por unidade produzida.
-
-  \item \textbf{Tecido Técnico} -- tecido funcional com tratamento de acabamento
-        especial (repelência, antichama ou UPF), destinado ao segmento de
-        uniformes corporativos e equipamentos de proteção individual (EPI).
-        Apresenta a maior margem unitária do portfólio.
+  \item \textbf{Forro de Poliéster Premium (95\% poliéster/5\% elastano):} variação
+        de maior valor agregado do forro padrão, com acabamento de superfície mais
+        suave e toque acetinado. Também sujeito a contratos de fornecimento
+        mínimo semanal com parceiros de moda feminina.
 \end{enumerate}
 
-\subsection{Estrutura Produtiva}
+\subsection{Definição do Problema}
 
-O parque fabril da Rentex opera em regime de dois turnos (segunda a sábado) e
-conta com os seguintes recursos principais:
+A Rentex opera em um modelo fortemente baseado em confiabilidade e em contratos
+de longo prazo (B2B). Com capacidade de maquinário finita (teares planos) e
+restrições de espaço físico para armazenamento de matérias-primas (fios de
+algodão, poliéster e elastano) e produtos acabados, a empresa enfrenta
+semanalmente a decisão de quanto produzir de cada tipo de tecido.
 
-\begin{itemize}
-  \item \textbf{Teares:} 20 teares circulares (para malhas) e 8 teares de rapier
-        (para planos e denim), com disponibilidade semanal total de
-        aproximadamente 1.200 horas-máquina.
+O desafio central consiste em \textbf{determinar o mix de produção semanal ideal}:
+quantos metros de cada família de tecido devem ser produzidos por semana, dado
+que os recursos produtivos são insuficientes para atender toda a demanda
+de mercado simultaneamente.
 
-  \item \textbf{Tinturaria:} setor de tingimento por esgotamento e foulard, com
-        capacidade de 800 horas-equipamento por semana. É o recurso que concentra
-        os maiores custos variáveis do processo.
-
-  \item \textbf{Acabamento:} linha de rameuse, compactadora e inspeção final, com
-        600 horas disponíveis por semana. Constitui o gargalo mais frequente para
-        os tecidos técnicos, cujo tratamento de superfície é mais demorado.
-
-  \item \textbf{Matéria-prima (fio):} estoque regulador semanal de 15.000 kg de
-        fio, composto por algodão cardado, poliéster e misturas. A reposição é
-        feita semanalmente por fornecedores fixos, tornando esse limite efetivo no
-        horizonte de planejamento.
-
-  \item \textbf{Mão de obra direta (MOD):} 900 horas de mão de obra direta
-        disponíveis por semana, distribuídas entre os setores.
-\end{itemize}
-
-\subsection{Contexto Competitivo}
-
-O setor têxtil brasileiro enfrenta pressão crescente de importados asiáticos,
-especialmente na categoria de malhas básicas. A resposta estratégica das empresas
-nacionais de médio porte tem sido a especialização em produtos de maior valor
-agregado e a redução de ineficiências operacionais
-\cite{iemi2022}.
-
-Nesse contexto, a decisão sobre o mix de produção semanal tem impacto direto na
-rentabilidade: produtos com maior margem de contribuição consomem mais recursos
-escassos, e a alocação equivocada entre famílias de produto pode representar
-perda de dezenas de milhares de reais por semana.
-
-\newpage
-%==============================================================================
-\section{Definição do Problema}
-%==============================================================================
-
-\subsection{Situação Atual}
-
-O planejamento da produção semanal da Rentex é realizado pelo gerente de
-produção com base em experiência acumulada e na carteira de pedidos em aberto.
-O processo consiste, em linhas gerais, em priorizar os produtos com entregas
-mais urgentes e preencher a capacidade restante com os itens de maior saída
-histórica.
-
-Essa abordagem apresenta três limitações identificadas:
+O problema surge do conflito direto entre os produtos:
 
 \begin{itemize}
-  \item As restrições de múltiplos recursos (teares, tinturaria, acabamento,
-        fio e MOD) são avaliadas de forma sequencial e informal, sem garantia de
-        viabilidade simultânea do plano.
+  \item \textbf{Forros de poliéster:} alta demanda, processo rápido, menor margem
+        de contribuição. Contratos com parceiros históricos impõem quantidades
+        mínimas semanais inegociáveis.
 
-  \item A relação entre margem de contribuição e consumo de recurso escasso
-        não é considerada explicitamente na priorização, o que pode levar à
-        produção de itens de baixa margem em detrimento de itens mais rentáveis
-        que ainda teriam demanda a atender.
-
-  \item A ausência de uma referência ótima impede a empresa de quantificar o
-        custo de oportunidade das decisões tomadas, dificultando negociações com
-        clientes e avaliações de capacidade instalada.
+  \item \textbf{Sarjas personalizadas:} menor volume, setup mais longo e mais lento,
+        mas margem de contribuição substancialmente superior. A receita líquida da
+        empresa depende da capacidade de alocar tempo de tear para esses produtos.
 \end{itemize}
 
-\subsection{Problema a ser Resolvido}
+Produzir forros em excesso consome o tempo de tear necessário para as sarjas
+lucrativas; priorizar apenas as sarjas pode gerar quebra de contratos com
+parceiros históricos. O modelo deve encontrar a alocação da capacidade fabril
+que maximize a margem de contribuição total, respeitando os prazos de entrega
+e as restrições físicas da planta.
 
-O problema consiste em determinar o plano de produção semanal que maximize a
-margem de contribuição total da Rentex, respeitando as capacidades disponíveis
-nos cinco recursos produtivos e os limites de demanda de mercado para cada
-família de produto.
+\subsection{Concepção da Modelagem}
 
-Formalmente, trata-se de um problema de otimização do mix de produção com
-múltiplos produtos e múltiplos recursos, cuja estrutura é a seguinte:
+A estruturação do problema como modelo de Programação Linear se apoia em
+quatro pilares:
+
+\subsubsection{Objetivo -- Função Objetivo}
+
+O modelo buscará \textbf{maximizar a margem de contribuição total} da fábrica
+por semana, definida como a soma das receitas de venda menos os custos
+variáveis diretos (fios, energia e insumos) de cada lote de tecido produzido.
+
+\subsubsection{Decisões -- Variáveis de Decisão}
+
+A variável de decisão para cada família de produto $j$ é:
+\[
+  x_j = \text{quantidade de lotes de 100 metros a produzir por semana}
+\]
+
+\subsubsection{Dados da Realidade -- Parâmetros}
 
 \begin{itemize}
-  \item \textbf{Variáveis de decisão:} quantidade a produzir de cada família de
-        tecido no horizonte de uma semana (em lotes de 100 metros lineares).
-
-  \item \textbf{Função objetivo:} maximização da soma das margens de contribuição
-        individuais, definidas como preço de venda menos custos variáveis diretos
-        de cada produto.
-
-  \item \textbf{Restrições:} consumo total de cada recurso produtivo não pode
-        superar a capacidade disponível; produção de cada produto não pode superar
-        a demanda máxima prevista para a semana.
-
-  \item \textbf{Domínio:} variáveis contínuas não negativas (Programação Linear
-        contínua).
+  \item \textbf{Tempo de ciclo:} horas que um tear leva para produzir um lote de
+        100~m de cada tecido, incluindo o tempo de setup amortizado por lote
+        (com base no tamanho mínimo de lote contratual).
+  \item \textbf{Custos e preços:} custo por kg dos fios e preço de venda de cada
+        produto, negociados com fornecedores e clientes.
+  \item \textbf{Disponibilidade:} horas úteis totais por semana nos teares
+        (considerando os dois turnos, manutenção preventiva e eficiência operacional)
+        e estoques máximos de matéria-prima.
 \end{itemize}
 
-\subsection{Justificativa e Relevância}
-
-A escolha da Programação Linear (PL) como técnica de resolução se justifica
-pelos seguintes aspectos:
-
-\begin{enumerate}[label=\textbf{(\roman*)}]
-  \item A função de margem de contribuição é linear no volume produzido, uma
-        vez que os preços de venda e os custos variáveis unitários são constantes
-        no horizonte semanal de planejamento.
-
-  \item As restrições de capacidade são lineares: o consumo de um recurso por
-        lote de produto é fixo, independentemente da combinação de produtos no
-        plano.
-
-  \item O horizonte de planejamento é curto (uma semana), o que valida a
-        hipótese de parâmetros estacionários, tornando a PL uma representação
-        adequada.
-
-  \item A PL fornece, além da solução ótima, informações de análise de
-        sensibilidade (preços-sombra, intervalos de otimalidade) diretamente
-        aproveitáveis pela gestão para decisões táticas, como negociação de
-        horas extras e avaliação de novos pedidos.
-\end{enumerate}
-
-A Programação Linear Inteira (PLI) será considerada em análise complementar no
-Relatório 2, caso a hipótese de divisibilidade dos lotes se mostre inadequada
-após levantamento de dados com a empresa.
-
-\newpage
-%==============================================================================
-\section{Concepção da Modelagem}\label{sec:model}
-%==============================================================================
-
-Esta seção apresenta a formulação preliminar do modelo de Programação Linear
-com base nas informações coletadas na visita técnica à Rentex. Os dados
-numéricos utilizados são estimativas de referência, sujeitos a refinamento
-junto à empresa nas próximas etapas do projeto.
-
-\subsection{Conjuntos e Índices}
+\subsubsection{Limites -- Restrições}
 
 \begin{itemize}
-  \item $j \in \{1, 2, 3, 4, 5, 6\}$: famílias de produto (Tabela~\ref{tab:produtos}).
-  \item $i \in \{1, 2, 3, 4, 5\}$: recursos produtivos (Tabela~\ref{tab:recursos}).
+  \item \textbf{Demanda mínima contratual:} produção semanal dos forros não pode
+        ser inferior às quantidades firmadas em contratos com clientes de longo
+        prazo.
+  \item \textbf{Demanda máxima de mercado:} produção de cada produto não pode
+        superar a demanda de mercado prevista para a semana.
+  \item \textbf{Capacidade de máquina:} total de horas de tear utilizadas não pode
+        superar as horas disponíveis, incluindo os tempos de setup.
+  \item \textbf{Matéria-prima e espaço:} volume de fios consumido não pode superar
+        o estoque disponível no almoxarifado (limitado por espaço físico e pelo
+        fornecimento semanal dos parceiros).
+  \item \textbf{Mão de obra:} horas-homem demandadas pelo plano não podem
+        superar a disponibilidade do quadro atual de 30 funcionários, mesmo com
+        previsão de horas extras dentro dos limites da convenção coletiva.
 \end{itemize}
 
-\begin{table}[H]
-\centering
-\caption{Famílias de produto e estimativas de margem de contribuição unitária}
-\label{tab:produtos}
-\begin{tabular}{clccc}
-\toprule
-\textbf{$j$} & \textbf{Produto} & \textbf{Preço (R\$/lote)} & \textbf{CV (R\$/lote)} & \textbf{MC$_j$ (R\$/lote)} \\
-\midrule
-1 & Malha Jersey       & 280 & 180 & 100 \\
-2 & Malha Rib          & 320 & 200 & 120 \\
-3 & Plano Popeline     & 350 & 220 & 130 \\
-4 & Plano Oxford       & 420 & 260 & 160 \\
-5 & Denim Leve         & 480 & 300 & 180 \\
-6 & Tecido Técnico     & 580 & 360 & 220 \\
-\bottomrule
-\multicolumn{5}{l}{\footnotesize Lote = 100 metros lineares. CV = custos variáveis diretos (fio, corantes, energia).}
-\end{tabular}
-\end{table}
+\subsection{Conclusão sobre a Viabilidade do Projeto}
 
-\begin{table}[H]
-\centering
-\caption{Recursos produtivos e capacidades semanais disponíveis}
-\label{tab:recursos}
-\begin{tabular}{clc}
-\toprule
-\textbf{$i$} & \textbf{Recurso} & \textbf{Capacidade $b_i$} \\
-\midrule
-1 & Teares (h/semana)               & 1.200 h \\
-2 & Tinturaria (h/semana)           & 800 h   \\
-3 & Acabamento (h/semana)           & 600 h   \\
-4 & Matéria-prima -- fio (kg/semana)& 15.000 kg\\
-5 & Mão de obra direta (h/semana)   & 900 h   \\
-\bottomrule
-\end{tabular}
-\end{table}
+A modelagem do problema de mix de produção da Rentex como Programação Linear
+é viável e relevante. Os dados necessários (tempos de processo, custos, preços
+e capacidades) estão disponíveis no sistema de controle da empresa e serão
+levantados nas próximas etapas. A Rentex confirmou, por meio de seu Diretor de
+Novos Negócios, a disponibilidade de dados para o desenvolvimento do projeto.
 
-\subsection{Parâmetros de Consumo de Recursos}
-
-A Tabela~\ref{tab:consumo} apresenta os coeficientes técnicos $a_{ij}$,
-definidos como a quantidade do recurso $i$ consumida por lote do produto $j$.
-Os valores foram estimados com base no roteiro de fabricação fornecido pelo
-setor de engenharia de processos da Rentex e serão validados em levantamento
-de dados na fase seguinte.
-
-\begin{table}[H]
-\centering
-\caption{Consumo de recursos por lote de produto ($a_{ij}$)}
-\label{tab:consumo}
-\begin{tabular}{lcccccc}
-\toprule
-\textbf{Recurso $i$} & \textbf{Jersey} & \textbf{Rib} & \textbf{Popeline} & \textbf{Oxford} & \textbf{Denim} & \textbf{Técnico} \\
-\midrule
-Teares (h/lote)       & 2,0 & 2,5 & 3,0 & 3,5 & 4,0 & 3,5 \\
-Tinturaria (h/lote)   & 1,5 & 1,5 & 2,0 & 2,5 & 3,0 & 1,0 \\
-Acabamento (h/lote)   & 0,8 & 0,9 & 1,2 & 1,4 & 1,8 & 2,5 \\
-Fio (kg/lote)         & 18  & 22  & 25  & 30  & 35  & 28  \\
-MOD (h/lote)          & 1,2 & 1,5 & 1,8 & 2,0 & 2,5 & 3,0 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsection{Limites de Demanda}
-
-Com base na carteira de pedidos histórica e nas projeções comerciais da Rentex,
-os limites de demanda semanal por família de produto são apresentados na
-Tabela~\ref{tab:demanda}.
-
-\begin{table}[H]
-\centering
-\caption{Limites de demanda semanal por produto ($d_j$, em lotes de 100~m)}
-\label{tab:demanda}
-\begin{tabular}{lc}
-\toprule
-\textbf{Produto} & \textbf{Demanda máxima $d_j$ (lotes)} \\
-\midrule
-Malha Jersey    & 200 \\
-Malha Rib       & 150 \\
-Plano Popeline  & 120 \\
-Plano Oxford    & 100 \\
-Denim Leve      &  80 \\
-Tecido Técnico  &  60 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsection{Formulação do Modelo}
-
-Seja $x_j$ a quantidade de lotes do produto $j$ a ser produzida na semana.
-O modelo de Programação Linear é formulado como:
-
-\textbf{Função objetivo:}
-\begin{equation}
-  \text{Maximizar} \quad Z = \sum_{j=1}^{6} \mathrm{MC}_j \, x_j
-  = 100x_1 + 120x_2 + 130x_3 + 160x_4 + 180x_5 + 220x_6
-  \label{eq:fo}
-\end{equation}
-
-\textbf{Sujeito a:}
-
-\noindent Restrições de capacidade de recursos:
-\begin{align}
-  2{,}0\,x_1 + 2{,}5\,x_2 + 3{,}0\,x_3 + 3{,}5\,x_4 + 4{,}0\,x_5 + 3{,}5\,x_6 &\leq 1200 \label{eq:tear}\\
-  1{,}5\,x_1 + 1{,}5\,x_2 + 2{,}0\,x_3 + 2{,}5\,x_4 + 3{,}0\,x_5 + 1{,}0\,x_6 &\leq 800  \label{eq:tint}\\
-  0{,}8\,x_1 + 0{,}9\,x_2 + 1{,}2\,x_3 + 1{,}4\,x_4 + 1{,}8\,x_5 + 2{,}5\,x_6 &\leq 600  \label{eq:acab}\\
-  18\,x_1 + 22\,x_2 + 25\,x_3 + 30\,x_4 + 35\,x_5 + 28\,x_6                    &\leq 15000 \label{eq:fio} \\
-  1{,}2\,x_1 + 1{,}5\,x_2 + 1{,}8\,x_3 + 2{,}0\,x_4 + 2{,}5\,x_5 + 3{,}0\,x_6 &\leq 900  \label{eq:mod}
-\end{align}
-
-\noindent Restrições de demanda:
-\begin{equation}
-  x_j \leq d_j, \quad j = 1, 2, \ldots, 6 \label{eq:dem}
-\end{equation}
-
-\noindent Não negatividade:
-\begin{equation}
-  x_j \geq 0, \quad j = 1, 2, \ldots, 6 \label{eq:nn}
-\end{equation}
-
-O modelo tem \textbf{6 variáveis de decisão} e \textbf{11 restrições funcionais}
-(5 de recurso + 6 de demanda), além das restrições de não negatividade. Esse
-tamanho o torna inviável de resolver graficamente e requer o uso de software de
-otimização, como o método Simplex implementado em Python (PuLP) ou outro solver
-indicado pela disciplina.
-
-\subsection{Identificação de Possíveis Gargalos}
-
-A análise qualitativa do modelo sugere que o recurso de \textbf{acabamento}
-(restrição~\ref{eq:acab}) tende a ser o principal gargalo para o tecido técnico,
-em virtude do coeficiente $a_{3,6} = 2{,}5$ h/lote, o mais alto da coluna.
-Para o denim leve, o consumo de fio ($a_{4,5} = 35$ kg/lote) e de teares
-($a_{1,5} = 4{,}0$ h/lote) são os fatores mais restritivos. Essa análise
-preliminar é consistente com a observação da equipe da Rentex de que os produtos
-de maior margem costumam ter produção limitada por restrições de capacidade,
-o que reforça a necessidade de um modelo formal de otimização.
-
-\newpage
-%==============================================================================
-\section{Revisão Bibliográfica e Exercício Resolvido}
-%==============================================================================
+A formulação matemática completa e os primeiros resultados serão apresentados
+no Relatório 2.
 
 \subsection{Artigo de Referência}
 
-O artigo selecionado como referência para este projeto é:
+O artigo selecionado é:
 
 \begin{quote}
 SOBREIRO, V. A.; NAGANO, M. S. Proposta de uma heurística construtiva baseada
-na TOC para definição de mix de produção. \textit{Produção}, v. 23, n. 3,
-p. 468--477, jul./set. 2013. \url{http://dx.doi.org/10.1590/S0103-65132012005000097}
+na TOC para definição de mix de produção. \textit{Produção}, v.~23, n.~3,
+p.~468--477, jul./set. 2013.
 \end{quote}
 
-O artigo aborda diretamente o problema de definição do mix de produção em
-ambientes com recursos produtivos insuficientes para atender a toda a demanda
-de mercado, que é exatamente a situação identificada na Rentex. Os autores
-apresentam a formulação matemática geral do problema, transcrita a seguir na
-notação do artigo:
+O artigo trata diretamente do problema de mix de produção com múltiplos recursos
+insuficientes e múltiplos produtos, que é exatamente a situação da Rentex. Os
+autores utilizam a Programação Linear Inteira como referência de otimalidade e
+propõem heurísticas construtivas baseadas na Teoria das Restrições (TOC) para
+problemas de maior escala. A formulação geral do artigo -- maximizar a soma das
+margens de contribuição sujeita a restrições de capacidade e demanda -- é
+idêntica à estrutura do modelo proposto para a Rentex. O artigo completo
+encontra-se no Anexo B.
 
-\begin{align}
-  &\text{Maximizar} \quad Z = \sum_{j=1}^{n} (P_j - c_j)\,x_j \nonumber \\
-  &\text{Sujeito a} \quad \sum_{j=1}^{n} a_{ij}\,x_j \leq b_i, \quad i = 1, 2, \ldots, m \nonumber \\
-  &\phantom{\text{Sujeito a}} \quad x_j \leq d_j, \quad j = 1, 2, \ldots, n \nonumber
-\end{align}
-
-onde $P_j$ é o preço de venda, $c_j$ é o custo do produto $j$, $a_{ij}$ é o
-consumo do recurso $i$ por unidade de $j$, $b_i$ é a capacidade disponível do
-recurso $i$ e $d_j$ é a demanda de mercado do produto $j$. Essa estrutura é
-idêntica à do modelo proposto na Seção~\ref{sec:model} deste relatório, com
-$m = 5$ recursos e $n = 6$ produtos.
-
-\subsubsection{Contribuição Principal do Artigo}
-
-Sobreiro e Nagano propõem uma heurística construtiva, denominada \textit{B-Greedy-M},
-que combina elementos da Teoria das Restrições (TOC) e do problema da mochila
-para obter soluções de qualidade elevada em tempo de processamento reduzido,
-especialmente em instâncias de grande porte com múltiplos gargalos.
-
-Os autores validam a heurística por comparação com a solução ótima obtida por
-Programação Linear Inteira (PLI), identificada como a referência de qualidade
-(\textit{benchmark}). Os resultados mostram que, para problemas de pequeno porte
-(até 8 produtos e 4 gargalos), a heurística proposta encontra a solução ótima ou
-fica a menos de 0,63\% dela.
-
-\subsubsection{Relação com o Projeto Rentex}
-
-A relevância do artigo para o presente projeto se manifesta em três aspectos:
-
-\begin{enumerate}[label=\textbf{(\roman*)}]
-  \item A formulação matemática do artigo é diretamente aplicável ao caso Rentex,
-        servindo de base para o modelo desenvolvido na Seção 4.
-
-  \item O artigo valida a PLI (e, por extensão, a PL contínua) como método
-        de referência para o problema de mix de produção, sustentando a escolha
-        desta técnica no projeto.
-
-  \item A análise de sensibilidade que os autores recomendam como trabalho futuro
-        está prevista no Relatório 3 deste projeto, com aplicação aos dados reais
-        da Rentex.
-\end{enumerate}
-
-\subsubsection{Limitações Identificadas}
-
-O artigo trabalha com instâncias sintéticas geradas aleatoriamente e não realiza
-aplicação em empresa real. Além disso, a heurística proposta foi implementada em
-VBA, enquanto o presente projeto utilizará Python, o que facilita a integração
-com ferramentas de análise de dados e replicação dos resultados.
-
-\newpage
-
-%------------------------------------------------------------------------------
 \subsection{Exercício Resolvido com Software}
-%------------------------------------------------------------------------------
 
-Para demonstrar a aplicabilidade da Programação Linear a problemas de produção,
-resolveu-se o exercício 3.1 do capítulo 3 de \citeauthor{winston2002}
-(\citeyear{winston2002}), que trata de um problema clássico de mix de produção
-com duas variáveis e três restrições.
-
-\subsubsection{Enunciado}
-
-Uma empresa produz dois tipos de produtos, A e B. Cada unidade de A gera uma
-margem de contribuição de R\$\,5,00 e cada unidade de B, de R\$\,4,00. Os
-recursos disponíveis por semana e os consumos unitários são:
-
-\begin{table}[H]
-\centering
-\caption{Dados do exercício Winston 3.1}
-\label{tab:winston}
-\begin{tabular}{lccc}
-\toprule
-\textbf{Recurso} & \textbf{Produto A} & \textbf{Produto B} & \textbf{Disponível} \\
-\midrule
-Recurso 1 (h) & 6 & 4 & 24 \\
-Recurso 2 (h) & 1 & 2 &  6 \\
-\bottomrule
-\multicolumn{4}{l}{\footnotesize Variáveis: $x_A \geq 0$, $x_B \geq 0$.}
-\end{tabular}
-\end{table}
-
-O modelo é:
-\begin{align}
-  &\text{Maximizar} \quad Z = 5x_A + 4x_B \nonumber \\
-  &\text{Sujeito a:} \nonumber \\
-  &\quad 6x_A + 4x_B \leq 24 \label{eq:w1}\\
-  &\quad x_A + 2x_B \leq 6  \label{eq:w2}\\
-  &\quad x_A,\, x_B \geq 0  \nonumber
-\end{align}
-
-\subsubsection{Resolução com Python (PuLP)}
-
-O código abaixo implementa e resolve o modelo utilizando a biblioteca
-\texttt{PuLP} \cite{mitchell2011}, com o solver CBC (padrão do PuLP, gratuito e
-de código aberto):
-
-\begin{lstlisting}[caption={Resolução do exercício Winston 3.1 com PuLP},
-                   label={lst:winston}]
-from pulp import LpMaximize, LpProblem, LpVariable, lpSum, value
-
-# Instancia o problema
-prob = LpProblem("Winston_3_1", LpMaximize)
-
-# Variaveis de decisao
-xA = LpVariable("xA", lowBound=0)
-xB = LpVariable("xB", lowBound=0)
-
-# Funcao objetivo
-prob += 5 * xA + 4 * xB, "Margem_de_Contribuicao"
-
-# Restricoes
-prob += 6 * xA + 4 * xB <= 24, "Recurso_1"
-prob +=     xA + 2 * xB <=  6, "Recurso_2"
-
-# Resolve
-prob.solve()
-
-# Resultados
-print(f"Status       : {prob.status}")
-print(f"xA (Produto A): {value(xA):.4f} unidades")
-print(f"xB (Produto B): {value(xB):.4f} unidades")
-print(f"Z (MC total) : R$ {value(prob.objective):.2f}")
-
-# Analise de folgas
-for name, constr in prob.constraints.items():
-    print(f"Folga {name}: {-constr.value():.4f}")
-\end{lstlisting}
-
-\subsubsection{Resultado Obtido}
-
-A execução do código produz a seguinte saída:
-
-\begin{verbatim}
-Status        : 1 (Optimal)
-xA (Produto A): 3.0000 unidades
-xB (Produto B): 1.5000 unidades
-Z (MC total)  : R$ 21.00
-Folga Recurso_1: 0.0000
-Folga Recurso_2: 0.0000
-\end{verbatim}
-
-A solução ótima é produzir \textbf{3 unidades de A} e \textbf{1,5 unidade de B},
-gerando margem de contribuição total de \textbf{R\$\,21,00 por semana}. Ambas as
-restrições estão ativas (folga zero), indicando que os dois recursos são
-simultaneamente gargalos na solução ótima.
-
-A verificação manual confirma o resultado:
-\begin{align*}
-  6(3) + 4(1{,}5) &= 18 + 6 = 24 \leq 24 \quad \checkmark \\
-  1(3) + 2(1{,}5) &= 3 + 3 = 6 \leq 6   \quad \checkmark \\
-  Z &= 5(3) + 4(1{,}5) = 15 + 6 = 21
-\end{align*}
-
-\subsubsection{Conexão com o Projeto Rentex}
-
-A estrutura deste exercício é análoga ao modelo da Rentex em menor escala: dois
-produtos, dois recursos ativos e uma função objetivo linear. No projeto completo,
-a dimensão do problema cresce para seis produtos e cinco recursos, tornando o
-método gráfico inaplicável e o uso de software indispensável. O mesmo código
-Python será estendido no Relatório 2 para incorporar os dados reais da Rentex.
-
-\newpage
-%==============================================================================
-\section{Considerações sobre a Viabilidade do Projeto}
-%==============================================================================
-
-\subsection{Disponibilidade de Dados}
-
-A Rentex confirmou, por meio de seu Diretor de Novos Negócios, a disponibilidade
-dos seguintes dados para as fases seguintes do projeto:
-
-\begin{itemize}
-  \item Roteiros de fabricação com tempos de operação por produto e por setor,
-        extraídos do sistema de controle de produção da empresa.
-  \item Relatórios de capacidade mensal dos setores de teares, tinturaria,
-        acabamento e expedição.
-  \item Histórico de pedidos dos últimos 12 meses, com volumes por SKU e
-        preços praticados, utilizado para calibrar os limites de demanda.
-  \item Fichas de custo de produto com discriminação de matéria-prima, mão de
-        obra direta e custos variáveis de processo.
-\end{itemize}
-
-O levantamento detalhado está programado para as semanas seguintes à entrega
-deste relatório, em visita ao parque fabril acompanhada pelo responsável do setor
-de Planejamento e Controle da Produção (PCP).
-
-\subsection{Cronograma do Projeto}
-
-\begin{table}[H]
-\centering
-\caption{Cronograma previsto para o projeto}
-\label{tab:cronograma}
-\begin{tabular}{clc}
-\toprule
-\textbf{Relatório} & \textbf{Conteúdo} & \textbf{Entrega} \\
-\midrule
-1\textordmasculine & Empresa, problema, modelagem conceitual, artigo e exercício & 24/03/2026 \\
-2\textordmasculine & Formulação final, dados validados, primeiros resultados       & 13/05/2026 \\
-3\textordmasculine & Resultados finais, comparação, análise de sensibilidade        & 10/06/2026 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsection{Softwares a Utilizar}
-
-O projeto utilizará os seguintes softwares:
-
-\begin{itemize}
-  \item \textbf{Python 3.11} com a biblioteca \texttt{PuLP} e o solver CBC para
-        resolução do modelo de PL.
-  \item \textbf{Gurobi} (licença acadêmica USP) como solver alternativo de alto
-        desempenho para análise de sensibilidade e testes de robustez.
-  \item \textbf{Jupyter Notebook} para documentação dos experimentos
-        computacionais a serem incluídos no Relatório 2.
-\end{itemize}
-
-\subsection{Anexos}
-
-O Anexo A contém a carta de aprovação assinada por Pedro Charmillot Silva,
-Diretor de Novos Negócios da Rentex Indústria Têxtil LTDA, autorizando a
-realização do projeto.
-
-O Anexo B contém o artigo de Sobreiro e Nagano (2013) na íntegra.
+Para demonstrar a aplicação da PL, resolveu-se o exercício 3.1 do Capítulo 3
+de \citeauthor{winston2002} (\citeyear{winston2002}), que envolve dois produtos,
+dois recursos e maximização de margem de contribuição -- estrutura análoga, em
+menor escala, ao problema da Rentex. O modelo e a resolução com a biblioteca
+\texttt{PuLP} em Python são apresentados em detalhes no Relatório 2, Seção de
+Implementação Computacional.
 
 \newpage
 
-%==============================================================================
-%  ANEXOS
-%==============================================================================
 \appendix
+\renewcommand{\thesection}{\Alph{section}}
+\renewcommand{\thesubsection}{\Alph{section}.\arabic{subsection}}
 
 \section{Carta de Aprovação da Empresa}
 \label{anx:carta}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{relatorio1/carta_empresa.pdf}
-\caption{Carta de aprovação emitida pela Rentex Indústria Têxtil LTDA}
-\label{fig:carta}
+\includegraphics[width=0.80\textwidth]{relatorio1/carta_empresa.pdf}
+\caption{Carta de aprovação emitida pela Rentex Indústria Têxtil LTDA,
+         assinada por Pedro Charmillot Silva, Diretor de Novos Negócios.}
 \end{figure}
 
 \newpage
@@ -613,22 +195,7 @@ O Anexo B contém o artigo de Sobreiro e Nagano (2013) na íntegra.
 \section{Artigo de Referência}
 \label{anx:artigo}
 
-\includegraphics[width=\textwidth, page=1]{relatorio1/artigo_referencia.pdf}
-\newpage
-\includegraphics[width=\textwidth, page=2]{relatorio1/artigo_referencia.pdf}
-\newpage
-\includegraphics[width=\textwidth, page=3]{relatorio1/artigo_referencia.pdf}
-\newpage
-\includegraphics[width=\textwidth, page=4]{relatorio1/artigo_referencia.pdf}
-\newpage
-\includegraphics[width=\textwidth, page=5]{relatorio1/artigo_referencia.pdf}
-\newpage
-\includegraphics[width=\textwidth, page=6]{relatorio1/artigo_referencia.pdf}
-\newpage
-\includegraphics[width=\textwidth, page=7]{relatorio1/artigo_referencia.pdf}
-\newpage
-\includegraphics[width=\textwidth, page=8]{relatorio1/artigo_referencia.pdf}
-\newpage
-\includegraphics[width=\textwidth, page=9]{relatorio1/artigo_referencia.pdf}
-\newpage
-\includegraphics[width=\textwidth, page=10]{relatorio1/artigo_referencia.pdf}
+\foreach \pg in {1,2,3,4,5,6,7,8,9,10}{%
+  \includegraphics[width=\textwidth, page=\pg]{relatorio1/artigo_referencia.pdf}%
+  \newpage
+}
