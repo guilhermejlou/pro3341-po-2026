@@ -353,3 +353,139 @@ as maiores violações nos teares (60\% acima do disponível) e na tinturaria
 e que a escolha do mix de produção tem impacto real e significativo no resultado.
 
 \newpage
+%==============================================================================
+\subsection{Implementação Computacional}
+\label{sec:implementacao}
+%==============================================================================
+
+\subsubsection{Ambiente de Desenvolvimento}
+
+O modelo foi implementado em Python 3.11 utilizando a biblioteca
+\texttt{PuLP 2.7} com o solver CBC 2.10 \cite{mitchell2011}. Os experimentos
+foram executados em computador com processador Intel Core i5-1235U, 16~GB de
+RAM e sistema operacional Ubuntu 22.04.
+
+\subsubsection{Código Completo}
+
+O código a seguir implementa o modelo de PL completo, resolve o problema,
+exibe a solução ótima e realiza a extração manual de informações de análise
+de sensibilidade.
+
+\begin{lstlisting}[caption={Implementação completa do modelo PL para a Rentex -- \texttt{rentex\_pl.py}},
+                   label={lst:modelo_completo}]
+"""
+PRO3341 -- Projeto Rentex: Otimizacao do Mix de Producao
+Modelo de Programacao Linear (PL) com analise de sensibilidade
+"""
+
+import pulp
+import pandas as pd
+
+# ===========================================================================
+# 1. DADOS DO PROBLEMA
+# ===========================================================================
+
+produtos = ['Jersey', 'Rib', 'Popeline', 'Oxford', 'Denim', 'Tecnico']
+recursos = ['Teares', 'Tinturaria', 'Acabamento', 'Fio', 'MOD']
+
+# Margens de contribuicao (R$/lote de 100 m)
+MC = {'Jersey': 97, 'Rib': 119, 'Popeline': 127,
+      'Oxford': 160, 'Denim': 180, 'Tecnico': 223}
+
+# Capacidades semanais disponiveis
+b = {'Teares': 1180, 'Tinturaria': 775, 'Acabamento': 570,
+     'Fio': 16000, 'MOD': 890}
+
+# Coeficientes tecnicos a[recurso][produto]
+a = {
+    'Teares':     {'Jersey':1.8,'Rib':2.3,'Popeline':2.9,
+                   'Oxford':3.4,'Denim':4.1,'Tecnico':3.6},
+    'Tinturaria': {'Jersey':1.4,'Rib':1.6,'Popeline':1.9,
+                   'Oxford':2.4,'Denim':2.9,'Tecnico':1.1},
+    'Acabamento': {'Jersey':0.7,'Rib':0.9,'Popeline':1.1,
+                   'Oxford':1.3,'Denim':1.7,'Tecnico':2.6},
+    'Fio':        {'Jersey': 17,'Rib': 21,'Popeline': 24,
+                   'Oxford': 29,'Denim': 36,'Tecnico': 27},
+    'MOD':        {'Jersey':1.1,'Rib':1.4,'Popeline':1.7,
+                   'Oxford':1.9,'Denim':2.4,'Tecnico':2.9},
+}
+
+# Demandas maximas semanais (lotes)
+d = {'Jersey':195,'Rib':148,'Popeline':118,
+     'Oxford':98,'Denim':78,'Tecnico':58}
+
+# ===========================================================================
+# 2. MODELO PL
+# ===========================================================================
+
+prob = pulp.LpProblem("Rentex_Mix_Producao", pulp.LpMaximize)
+
+# Variaveis de decisao
+x = {j: pulp.LpVariable(f"x_{j}", lowBound=0) for j in produtos}
+
+# Funcao objetivo
+prob += pulp.lpSum(MC[j] * x[j] for j in produtos), "Margem_Contribuicao_Total"
+
+# Restricoes de capacidade
+for i in recursos:
+    prob += (
+        pulp.lpSum(a[i][j] * x[j] for j in produtos) <= b[i],
+        f"Capacidade_{i}"
+    )
+
+# Restricoes de demanda
+for j in produtos:
+    prob += x[j] <= d[j], f"Demanda_{j}"
+
+# ===========================================================================
+# 3. RESOLUCAO
+# ===========================================================================
+
+prob.solve(pulp.PULP_CBC_CMD(msg=0))
+
+# ===========================================================================
+# 4. RESULTADOS
+# ===========================================================================
+
+print("=" * 60)
+print("RESULTADO -- RENTEX MIX DE PRODUCAO")
+print("=" * 60)
+print(f"Status : {pulp.LpStatus[prob.status]}")
+print(f"Z (MC) : R$ {pulp.value(prob.objective):,.2f} / semana")
+print()
+
+# Plano de producao
+print(f"{'Produto':<12} {'Producao':>10} {'Demanda':>10} {'Ocup.%':>8} {'MC Unit':>9} {'MC Total':>12}")
+print("-" * 65)
+z_total = 0
+for j in produtos:
+    xv = pulp.value(x[j])
+    ocup = 100 * xv / d[j]
+    mc_t = MC[j] * xv
+    z_total += mc_t
+    print(f"{j:<12} {xv:>10.1f} {d[j]:>10} {ocup:>7.1f}% {MC[j]:>9} {mc_t:>12,.2f}")
+print("-" * 65)
+print(f"{'TOTAL':>12} {'':>10} {'':>10} {'':>8} {'':>9} {z_total:>12,.2f}")
+
+# Utilizacao dos recursos
+print()
+print(f"{'Recurso':<14} {'Uso':>10} {'Cap.':>10} {'Folga':>10} {'Ocup.%':>8}")
+print("-" * 55)
+for i in recursos:
+    uso = sum(a[i][j] * pulp.value(x[j]) for j in produtos)
+    folga = b[i] - uso
+    ocup = 100 * uso / b[i]
+    print(f"{i:<14} {uso:>10.1f} {b[i]:>10} {folga:>10.1f} {ocup:>7.1f}%")
+
+# Precos-sombra (via restricoes do modelo)
+print()
+print("PRECOS-SOMBRA (shadow prices)")
+print("-" * 45)
+for name, constr in prob.constraints.items():
+    if "Capacidade" in name:
+        recurso = name.replace("Capacidade_", "")
+        pi = -constr.pi if constr.pi is not None else 0.0
+        print(f"  {recurso:<14}: R$ {pi:>8.4f} por unidade adicional")
+\end{lstlisting}
+
+\newpage
