@@ -1,210 +1,64 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PRO3341 — Projeto PO 2026</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PRO3341 – Projeto PO 2026 | Poli-USP</title>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: #0f1117;
-      color: #e2e8f0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    header {
-      background: #1a1d2e;
-      border-bottom: 1px solid #2d3748;
-      padding: 1rem 2rem;
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-    }
-
-    .badge {
-      background: #3b5bdb;
-      color: #fff;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 0.25rem 0.6rem;
-      border-radius: 4px;
-      white-space: nowrap;
-    }
-
-    header h1 {
-      font-size: 1rem;
-      font-weight: 600;
-      color: #e2e8f0;
-    }
-
-    header p {
-      font-size: 0.78rem;
-      color: #718096;
-      margin-top: 0.1rem;
-    }
-
-    .toolbar {
-      background: #1a1d2e;
-      border-bottom: 1px solid #2d3748;
-      padding: 0.5rem 2rem;
-      display: flex;
-      gap: 0.75rem;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.4rem 0.9rem;
-      border-radius: 6px;
-      font-size: 0.82rem;
-      font-weight: 500;
-      cursor: pointer;
-      border: none;
-      text-decoration: none;
-      transition: background 0.15s;
-    }
-
-    .btn-primary {
-      background: #3b5bdb;
-      color: #fff;
-    }
-    .btn-primary:hover { background: #2f4ac7; }
-
-    .btn-ghost {
-      background: #2d3748;
-      color: #a0aec0;
-    }
-    .btn-ghost:hover { background: #3a4a5e; color: #e2e8f0; }
-
-    .divider { width: 1px; height: 1.4rem; background: #2d3748; margin: 0 0.25rem; }
-
-    .chip {
-      font-size: 0.72rem;
-      color: #718096;
-      padding: 0.25rem 0.6rem;
-      background: #1e2533;
-      border: 1px solid #2d3748;
-      border-radius: 20px;
-    }
-
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      padding: 1.5rem 2rem;
-    }
-
-    .viewer-wrap {
-      flex: 1;
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid #2d3748;
-      background: #fff;
-      min-height: 80vh;
-    }
-
-    iframe {
-      width: 100%;
-      height: 100%;
-      min-height: 80vh;
-      border: none;
-      display: block;
-    }
-
-    .no-pdf {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 60vh;
-      gap: 1rem;
-      color: #718096;
-    }
-
-    .no-pdf svg { opacity: 0.3; }
-    .no-pdf h2 { font-size: 1.1rem; color: #a0aec0; }
-    .no-pdf p  { font-size: 0.85rem; text-align: center; max-width: 360px; }
-
-    footer {
-      padding: 0.75rem 2rem;
-      font-size: 0.72rem;
-      color: #4a5568;
-      border-top: 1px solid #1a1d2e;
-      display: flex;
-      justify-content: space-between;
-    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    :root{--bg:#0f1117;--surface:#1a1d2e;--border:#2d3148;--text:#e2e8f0;--muted:#64748b;--accent:#3b82f6;--green:#4ade80;--gbg:#0f2d1f;--gborder:#166534;}
+    body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);height:100vh;display:flex;flex-direction:column;overflow:hidden;}
+    header{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-shrink:0;}
+    .h-left{display:flex;flex-direction:column;gap:2px;}
+    .h-title{font-size:13px;font-weight:600;color:#f1f5f9;}
+    .h-sub{font-size:11px;color:var(--muted);}
+    .h-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+    .badge{display:flex;align-items:center;gap:5px;background:var(--gbg);border:1px solid var(--gborder);color:var(--green);font-size:11px;font-weight:500;padding:3px 9px;border-radius:20px;white-space:nowrap;}
+    .dot{width:5px;height:5px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;}
+    @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+    .btn{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:7px;font-size:12px;font-weight:500;cursor:pointer;text-decoration:none;border:none;transition:.15s;white-space:nowrap;font-family:inherit;}
+    .btn-blue{background:var(--accent);color:#fff;}.btn-blue:hover{background:#2563eb;}
+    .btn-ghost{background:transparent;color:#94a3b8;border:1px solid var(--border);}.btn-ghost:hover{background:#1e2235;color:var(--text);}
+    .toolbar{background:#151824;border-bottom:1px solid var(--border);padding:6px 18px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;font-size:11px;color:var(--muted);}
+    .toolbar-left{display:flex;align-items:center;gap:14px;}
+    .toolbar strong{color:#94a3b8;}
+    .main{flex:1;display:flex;overflow:hidden;}
+    .pdf-wrap{flex:1;position:relative;background:#404040;}
+    .pdf-wrap iframe{width:100%;height:100%;border:none;display:block;}
+    .no-pdf{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:1rem;color:var(--muted);}
+    .no-pdf h2{font-size:1rem;color:#94a3b8;}
+    .no-pdf p{font-size:.82rem;text-align:center;max-width:340px;line-height:1.7;}
   </style>
 </head>
 <body>
-
 <header>
-  <span class="badge">PRO3341</span>
-  <div>
-    <h1>Modelagem e Otimização de Sistemas de Produção</h1>
-    <p>Prof.ª Dra. Celma O. Ribeiro &nbsp;·&nbsp; 1º Semestre 2026 &nbsp;·&nbsp; Escola Politécnica — USP</p>
+  <div class="h-left">
+    <div class="h-title">PRO3341 – Modelagem e Otimização de Sistemas de Produção — Projeto Prático 2026</div>
+    <div class="h-sub">Prof.ª Dra. Celma O. Ribeiro &nbsp;·&nbsp; Escola Politécnica – USP &nbsp;·&nbsp; 1º Semestre 2026</div>
+  </div>
+  <div class="h-right">
+    <div class="badge"><div class="dot"></div>Atualizado automaticamente</div>
+    <a href="main.pdf" download="relatorio_PRO3341_2026.pdf" class="btn btn-blue">⬇ Baixar PDF</a>
+    <a href="https://github.com/jlouclaude/pro3341-po-2026" target="_blank" class="btn btn-ghost">⌥ GitHub</a>
   </div>
 </header>
-
 <div class="toolbar">
-  <a class="btn btn-primary" href="relatorio.pdf" download="relatorio_pro3341.pdf">
-    ⬇ Download PDF
-  </a>
-  <a class="btn btn-ghost" href="relatorio.pdf" target="_blank">
-    ↗ Abrir em nova aba
-  </a>
-  <div class="divider"></div>
-  <span class="chip" id="status">Carregando…</span>
-</div>
-
-<main>
-  <div class="viewer-wrap">
-    <iframe
-      id="pdf-frame"
-      src="relatorio.pdf"
-      title="Relatório PRO3341"
-    ></iframe>
+  <div class="toolbar-left">
+    <div>📄 <strong>main.pdf</strong></div>
+    <div>LaTeX · PRO3341 · <strong>Pesquisa Operacional</strong></div>
   </div>
-</main>
-
-<footer>
-  <span>PRO3341 · Projeto Prático 2026</span>
-  <span id="updated"></span>
-</footer>
-
+  <div id="last-build" style="font-size:11px;color:var(--muted);">⏳ Verificando última compilação...</div>
+</div>
+<div class="main">
+  <div class="pdf-wrap" id="pdf-wrap">
+    <iframe id="pdf-frame" src="main.pdf#toolbar=1&navpanes=1&scrollbar=1&view=FitH" title="Relatório PRO3341" allowfullscreen></iframe>
+  </div>
+</div>
 <script>
-  const frame = document.getElementById('pdf-frame');
-  const status = document.getElementById('status');
-
-  frame.addEventListener('load', () => {
-    status.textContent = '✓ PDF carregado';
-  });
-
-  frame.addEventListener('error', () => {
-    status.textContent = '⚠ PDF não encontrado — aguarde a próxima compilação';
-    document.querySelector('.viewer-wrap').innerHTML = `
-      <div class="no-pdf">
-        <svg width="64" height="64" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0
-               01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-        </svg>
-        <h2>PDF ainda não compilado</h2>
-        <p>O GitHub Actions compilará o LaTeX automaticamente após o próximo push. Recarregue a página em instantes.</p>
-      </div>`;
-  });
-
-  document.getElementById('updated').textContent =
-    'Atualizado: ' + new Date().toLocaleString('pt-BR');
+fetch('last_build.txt?t='+Date.now()).then(r=>r.ok?r.text():null).then(t=>{if(t)document.getElementById('last-build').textContent='🕐 '+t.split('\n')[0];}).catch(()=>{});
+document.getElementById('pdf-frame').addEventListener('error',()=>{
+  document.getElementById('pdf-wrap').innerHTML='<div class="no-pdf"><h2>PDF ainda não compilado</h2><p>O GitHub Actions compilará o LaTeX automaticamente no próximo push. Recarregue em instantes.</p></div>';
+});
 </script>
-
 </body>
 </html>

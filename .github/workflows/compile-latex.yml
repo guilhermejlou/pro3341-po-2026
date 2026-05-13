@@ -6,6 +6,9 @@ on:
     paths:
       - '**.tex'
       - '**.bib'
+      - 'relatorio1/**'
+      - 'relatorio2/**'
+      - 'relatorio3/**'
       - '.github/workflows/compile-latex.yml'
   workflow_dispatch:
 
@@ -23,19 +26,20 @@ jobs:
           root_file: main.tex
           latexmk_use_lualatex: false
           latexmk_shell_escape: true
-          extra_system_packages: "py3-pygments"
           args: -pdf -interaction=nonstopmode -file-line-error
 
-      - name: Move PDF to public/
+      - name: Prepare public/
         run: |
           mkdir -p public
-          cp main.pdf public/relatorio.pdf
-          echo "✅ PDF compilado: $(du -h public/relatorio.pdf | cut -f1)"
+          cp main.pdf public/main.pdf
+          echo "Compilado em $(TZ='America/Sao_Paulo' date '+%d/%m/%Y às %H:%M') (horário de Brasília) · commit $(git rev-parse --short HEAD)" \
+            > public/last_build.txt
+          echo "✅ PDF: $(du -h public/main.pdf | cut -f1)"
 
-      - name: Commit PDF
+      - name: Commit PDF + build info
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "ci: atualiza PDF compilado [skip ci]"
-          file_pattern: "public/relatorio.pdf"
+          file_pattern: "public/main.pdf public/last_build.txt"
           commit_user_name: "github-actions[bot]"
           commit_user_email: "github-actions[bot]@users.noreply.github.com"
