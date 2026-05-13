@@ -111,3 +111,87 @@ escassos, e a alocação equivocada entre famílias de produto pode representar
 perda de dezenas de milhares de reais por semana.
 
 \newpage
+%==============================================================================
+\section{Definição do Problema}
+%==============================================================================
+
+\subsection{Situação Atual}
+
+O planejamento da produção semanal da Rentex é realizado pelo gerente de
+produção com base em experiência acumulada e na carteira de pedidos em aberto.
+O processo consiste, em linhas gerais, em priorizar os produtos com entregas
+mais urgentes e preencher a capacidade restante com os itens de maior saída
+histórica.
+
+Essa abordagem apresenta três limitações identificadas:
+
+\begin{itemize}
+  \item As restrições de múltiplos recursos (teares, tinturaria, acabamento,
+        fio e MOD) são avaliadas de forma sequencial e informal, sem garantia de
+        viabilidade simultânea do plano.
+
+  \item A relação entre margem de contribuição e consumo de recurso escasso
+        não é considerada explicitamente na priorização, o que pode levar à
+        produção de itens de baixa margem em detrimento de itens mais rentáveis
+        que ainda teriam demanda a atender.
+
+  \item A ausência de uma referência ótima impede a empresa de quantificar o
+        custo de oportunidade das decisões tomadas, dificultando negociações com
+        clientes e avaliações de capacidade instalada.
+\end{itemize}
+
+\subsection{Problema a ser Resolvido}
+
+O problema consiste em determinar o plano de produção semanal que maximize a
+margem de contribuição total da Rentex, respeitando as capacidades disponíveis
+nos cinco recursos produtivos e os limites de demanda de mercado para cada
+família de produto.
+
+Formalmente, trata-se de um problema de otimização do mix de produção com
+múltiplos produtos e múltiplos recursos, cuja estrutura é a seguinte:
+
+\begin{itemize}
+  \item \textbf{Variáveis de decisão:} quantidade a produzir de cada família de
+        tecido no horizonte de uma semana (em lotes de 100 metros lineares).
+
+  \item \textbf{Função objetivo:} maximização da soma das margens de contribuição
+        individuais, definidas como preço de venda menos custos variáveis diretos
+        de cada produto.
+
+  \item \textbf{Restrições:} consumo total de cada recurso produtivo não pode
+        superar a capacidade disponível; produção de cada produto não pode superar
+        a demanda máxima prevista para a semana.
+
+  \item \textbf{Domínio:} variáveis contínuas não negativas (Programação Linear
+        contínua).
+\end{itemize}
+
+\subsection{Justificativa e Relevância}
+
+A escolha da Programação Linear (PL) como técnica de resolução se justifica
+pelos seguintes aspectos:
+
+\begin{enumerate}[label=\textbf{(\roman*)}]
+  \item A função de margem de contribuição é linear no volume produzido, uma
+        vez que os preços de venda e os custos variáveis unitários são constantes
+        no horizonte semanal de planejamento.
+
+  \item As restrições de capacidade são lineares: o consumo de um recurso por
+        lote de produto é fixo, independentemente da combinação de produtos no
+        plano.
+
+  \item O horizonte de planejamento é curto (uma semana), o que valida a
+        hipótese de parâmetros estacionários, tornando a PL uma representação
+        adequada.
+
+  \item A PL fornece, além da solução ótima, informações de análise de
+        sensibilidade (preços-sombra, intervalos de otimalidade) diretamente
+        aproveitáveis pela gestão para decisões táticas, como negociação de
+        horas extras e avaliação de novos pedidos.
+\end{enumerate}
+
+A Programação Linear Inteira (PLI) será considerada em análise complementar no
+Relatório 2, caso a hipótese de divisibilidade dos lotes se mostre inadequada
+após levantamento de dados com a empresa.
+
+\newpage
