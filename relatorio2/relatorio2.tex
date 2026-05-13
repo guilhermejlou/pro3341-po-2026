@@ -1,0 +1,99 @@
+% =============================================================================
+% RELATÓRIO 2  —  Entrega: 13/05/2026
+% Conteúdo obrigatório:
+%   • Formulação matemática completa
+%   • Estudo bibliográfico do problema e da técnica
+%   • Primeiros resultados + análise preliminar
+% =============================================================================
+
+\section{Relatório 2 -- Formulação Matemática e Primeiros Resultados}
+
+% -----------------------------------------------------------------------------
+\subsection{Revisão da Literatura}
+% Estudo bibliográfico:
+%   • Contexto do problema na literatura de PO
+%   • Trabalhos anteriores que tratam problemas similares
+%   • Justificativa da técnica escolhida
+
+\subsubsection{Contextualização do Problema na Literatura}
+\lipsum[1-2]
+
+\subsubsection{Técnica de Resolução Adotada e Justificativa}
+\lipsum[3]
+
+% -----------------------------------------------------------------------------
+\subsection{Formulação Matemática Completa}
+
+\subsubsection{Conjuntos e Índices}
+\begin{description}[leftmargin=2cm]
+  \item[$I$] Conjunto de \ldots
+  \item[$J$] Conjunto de \ldots
+\end{description}
+
+\subsubsection{Parâmetros}
+\begin{description}[leftmargin=2cm]
+  \item[$c_{ij}$] Custo de \ldots
+  \item[$b_i$]    Capacidade de \ldots
+  \item[$d_j$]    Demanda de \ldots
+\end{description}
+
+\subsubsection{Variáveis de Decisão}
+\begin{description}[leftmargin=2cm]
+  \item[$x_{ij} \geq 0$] Quantidade de \ldots alocada de $i$ para $j$
+\end{description}
+
+\subsubsection{Modelo}
+\begin{align}
+  \min \quad        & z = \sum_{i \in I} \sum_{j \in J} c_{ij}\, x_{ij}
+                    \label{eq:fo_r2} \\
+  \text{s.a.} \quad & \sum_{j \in J} x_{ij} \leq b_i,
+                    \quad \forall\, i \in I   \label{eq:cap_r2} \\
+                    & \sum_{i \in I} x_{ij} \geq d_j,
+                    \quad \forall\, j \in J   \label{eq:dem_r2} \\
+                    & x_{ij} \geq 0,
+                    \quad \forall\, i \in I,\; j \in J   \label{eq:nonneg_r2}
+\end{align}
+
+% Descrição das restrições
+A função objetivo~\eqref{eq:fo_r2} minimiza o custo total.
+As restrições~\eqref{eq:cap_r2} garantem que a capacidade de cada origem não seja excedida.
+As restrições~\eqref{eq:dem_r2} asseguram o atendimento de toda a demanda.
+As restrições~\eqref{eq:nonneg_r2} impõem a não-negatividade.
+
+% -----------------------------------------------------------------------------
+\subsection{Dados Utilizados}
+% Descreva os dados reais obtidos da empresa.
+
+\subsubsection{Fonte e Coleta dos Dados}
+\lipsum[4]
+
+\subsubsection{Tratamento e Preparação dos Dados}
+\lipsum[5]
+
+% -----------------------------------------------------------------------------
+\subsection{Primeiros Resultados}
+
+\subsubsection{Instância de Teste}
+% Descreva a instância utilizada (tamanho, origem dos dados).
+\lipsum[6]
+
+\subsubsection{Resultados Obtidos}
+% Tabela de resultados preliminares
+\begin{table}[H]
+  \centering
+  \caption{Primeiros resultados obtidos}
+  \label{tab:resultados_r2}
+  \begin{tabular}{lcc}
+    \toprule
+    Cenário & Valor da FO & Tempo (s) \\
+    \midrule
+    Instância pequena & --- & --- \\
+    Instância média   & --- & --- \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsubsection{Análise Preliminar}
+\lipsum[7-8]
+
+\newpage

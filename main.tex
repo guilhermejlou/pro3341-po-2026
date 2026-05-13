@@ -1,0 +1,85 @@
+\documentclass[12pt, a4paper]{article}
+
+% ─── Pacotes essenciais ───────────────────────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+
+% Layout
+\usepackage[top=3cm, bottom=2cm, left=3cm, right=2cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+% Matemática
+\usepackage{amsmath, amssymb, amsthm}
+
+% Figuras e tabelas
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{longtable}
+
+% Algoritmos / código
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{xcolor}
+
+% Referências e links
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage[backend=biber, style=abnt]{biblatex}
+\addbibresource{referencias.bib}
+
+% Outros
+\usepackage{enumitem}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{pdflscape}
+\usepackage{lipsum}   % remover no documento final
+
+% ─── Configuração de listings ─────────────────────────────────────────────────
+\lstset{
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue}\bfseries,
+  commentstyle=\color{gray},
+  stringstyle=\color{orange},
+  numbers=left,
+  numberstyle=\tiny,
+  frame=single,
+  breaklines=true,
+  captionpos=b,
+}
+
+% ─── Dados do projeto ─────────────────────────────────────────────────────────
+\newcommand{\disciplina}{PRO3341 -- Modelagem e Otimização de Sistemas de Produção}
+\newcommand{\professora}{Prof\textsuperscript{a}. Dra. Celma O. Ribeiro}
+\newcommand{\semestre}{1\textsuperscript{o} Semestre de 2026}
+\newcommand{\tituloProj}{[Título do Projeto]}   % ← preencher
+\newcommand{\empresa}{[Nome da Empresa]}         % ← preencher
+\newcommand{\grupoA}{Aluno 1}                    % ← preencher
+\newcommand{\grupoB}{Aluno 2}
+\newcommand{\grupoC}{Aluno 3}
+\newcommand{\grupoD}{Aluno 4}                    % remover se grupo de 3
+
+% ─── Documento ────────────────────────────────────────────────────────────────
+\begin{document}
+
+% Capa
+\input{capa}
+
+% Sumário
+\tableofcontents
+\newpage
+
+% Relatórios — descomente conforme entrega
+\input{relatorio1/relatorio1}
+%\input{relatorio2/relatorio2}
+%\input{relatorio3/relatorio3}
+
+% Referências
+\printbibliography[heading=bibintoc, title={Referências}]
+
+\end{document}
