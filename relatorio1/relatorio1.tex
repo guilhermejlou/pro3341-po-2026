@@ -6,145 +6,90 @@
 
 \subsection{Sobre a Empresa}
 
-\subsubsection{Negócio}
+A Rentex é uma empresa do setor têxtil fundada em 1991, com sede na Rua João
+Antônio de Oliveira, 1083, no bairro de Mooca/Belenzinho, São Paulo
+(CEP 03111-001). Com cerca de 30 funcionários distribuídos em dois turnos, opera
+no segmento B2B fabricando tecidos planos para confecção e uniformes. O contato
+institucional para este projeto é Pedro Charmillot Silva, Diretor de Novos
+Negócios, cuja autorização de uso da empresa para fins acadêmicos encontra-se
+no Anexo~A.
 
-A Rentex é uma empresa brasileira do setor têxtil fundada em 1991, com sede na
-Rua João Antônio de Oliveira, 1083, no bairro de Mooca/Belenzinho, São Paulo,
-CEP 03111-001. Ao longo de mais de três décadas de operação, a empresa
-consolidou-se como fornecedora confiável para o segmento de vestuário e uniformes
-no mercado B2B nacional.
-
-Especializada na fabricação de \textbf{tecidos planos}, a Rentex produz principalmente
-sarjas e forros, atendendo a fabricantes de vestuário e empresas de uniformes que
-demandam materiais com desempenho, durabilidade e possibilidade de personalização.
-O portfólio inclui tecidos com diferentes composições -- misturas de algodão,
-poliéster e elastano -- desenvolvidos conforme as especificações de cada cliente.
-
-Com aproximadamente 30 funcionários distribuídos em dois turnos, a empresa opera
-em regime de parceria de longo prazo com seus clientes, com foco em qualidade e
-pontualidade de entrega. O contato institucional para este projeto é Pedro
-Charmillot Silva, Diretor de Novos Negócios, cuja autorização de uso da empresa
-para fins acadêmicos encontra-se no Anexo A.
+A empresa é especializada em sarjas e forros, atendendo fabricantes de vestuário
+que demandam materiais com composições específicas de algodão, poliéster e
+elastano. Seu modelo comercial é baseado em parcerias de longo prazo: parte da
+produção é comprometida semanalmente com clientes fixos por contrato.
 
 \subsubsection{Portfólio de Produtos}
 
-O portfólio ativo da Rentex é composto por quatro famílias principais de tecidos:
+O portfólio ativo compreende quatro famílias:
 
-\begin{enumerate}[label=\textbf{(\arabic*)}]
-  \item \textbf{Sarja Barcelos (100\% algodão):} tecido plano de sarja convencional,
-        produzido inteiramente com fio de algodão cardado. É o produto de maior
-        volume da linha e atende clientes de uniformes e confecção básica.
-        Apresenta tempo de preparação de tear (setup) reduzido, mas margem de
-        contribuição unitária inferior à da Sarja Joy.
+\textbf{Sarja Barcelos (100\% algodão)} é o produto de maior volume da linha,
+com processo mais padronizado e tempo de setup reduzido nos teares. Atende
+principalmente confecção básica e uniformes. Sua margem unitária é a menor entre
+as sarjas.
 
-  \item \textbf{Sarja Joy (mista poliéster/elastano):} sarja com composição mista
-        (aproximadamente 70\% algodão, 25\% poliéster e 5\% elastano), que confere
-        ao tecido maior resistência e toque diferenciado. Possui maior valor
-        agregado, porém exige tempos de setup significativamente maiores para
-        troca do urdume e da trama nos teares.
+\textbf{Sarja Joy (mista poliéster/elastano)} tem composição aproximada de
+70\% algodão, 25\% poliéster e 5\% elastano, o que exige troca de urdume e
+trama nos teares a cada novo lote. O tempo de setup é significativamente maior,
+mas a margem de contribuição compensa.
 
-  \item \textbf{Forro de Poliéster Padrão (100\% poliéster):} forro leve de
-        acabamento padronizado, utilizado no interior de roupas e bolsas. Produto
-        de alto volume, menor margem de contribuição e processo de produção rápido
-        e padronizado. Está sujeito a contratos de fornecimento de longo prazo com
-        clientes estratégicos, que impõem uma quantidade mínima semanal.
+\textbf{Forro de Poliéster Padrão (100\% poliéster)} é um forro leve de
+acabamento padronizado usado no interior de roupas e bolsas. Processo rápido,
+alto volume, menor margem. Três clientes têm contrato de fornecimento mínimo
+semanal para este produto.
 
-  \item \textbf{Forro de Poliéster Premium (95\% poliéster/5\% elastano):} variação
-        de maior valor agregado do forro padrão, com acabamento de superfície mais
-        suave e toque acetinado. Também sujeito a contratos de fornecimento
-        mínimo semanal com parceiros de moda feminina.
-\end{enumerate}
+\textbf{Forro de Poliéster Premium (95\% poliéster/5\% elastano)} é a variação
+de maior valor do forro padrão, com acabamento acetinado voltado ao segmento de
+moda feminina. Um cliente estratégico tem contrato de mínimo semanal.
 
 \subsection{Definição do Problema}
 
-A Rentex opera em um modelo fortemente baseado em confiabilidade e em contratos
-de longo prazo (B2B). Com capacidade de maquinário finita (teares planos) e
-restrições de espaço físico para armazenamento de matérias-primas (fios de
-algodão, poliéster e elastano) e produtos acabados, a empresa enfrenta
-semanalmente a decisão de quanto produzir de cada tipo de tecido.
+Com cinco teares planos e armazenamento limitado de matéria-prima, a Rentex não
+consegue atender simultaneamente toda a demanda de mercado de todos os produtos.
+Toda semana o gerente de produção decide quanto produzir de cada tecido, e essa
+decisão tem impacto direto no resultado financeiro.
 
-O desafio central consiste em \textbf{determinar o mix de produção semanal ideal}:
-quantos metros de cada família de tecido devem ser produzidos por semana, dado
-que os recursos produtivos são insuficientes para atender toda a demanda
-de mercado simultaneamente.
+O conflito central está entre os forros e as sarjas. Os forros têm alta demanda
+e processo rápido, mas margem baixa, e parte da produção é obrigatória por
+contrato. As sarjas têm setup mais demorado e menor demanda, mas margem
+substancialmente maior. Produzir mais forro do que o necessário consome horas de
+tear que poderiam gerar receita maior nas sarjas; produzir exclusivamente sarjas
+significaria quebrar contratos com clientes de longo prazo.
 
-O problema surge do conflito direto entre os produtos:
-
-\begin{itemize}
-  \item \textbf{Forros de poliéster:} alta demanda, processo rápido, menor margem
-        de contribuição. Contratos com parceiros históricos impõem quantidades
-        mínimas semanais inegociáveis.
-
-  \item \textbf{Sarjas personalizadas:} menor volume, setup mais longo e mais lento,
-        mas margem de contribuição substancialmente superior. A receita líquida da
-        empresa depende da capacidade de alocar tempo de tear para esses produtos.
-\end{itemize}
-
-Produzir forros em excesso consome o tempo de tear necessário para as sarjas
-lucrativas; priorizar apenas as sarjas pode gerar quebra de contratos com
-parceiros históricos. O modelo deve encontrar a alocação da capacidade fabril
-que maximize a margem de contribuição total, respeitando os prazos de entrega
-e as restrições físicas da planta.
+O problema é, portanto, determinar o mix semanal que maximize a margem de
+contribuição total sujeita às restrições de capacidade dos teares, de estoque
+de matéria-prima, de mão de obra e de demanda.
 
 \subsection{Concepção da Modelagem}
 
-A estruturação do problema como modelo de Programação Linear se apoia em
-quatro pilares:
+O problema se enquadra naturalmente em um modelo de Programação Linear. A
+variável de decisão $x_j$ representa a quantidade de lotes de 100 metros do
+produto $j$ a produzir por semana. A função objetivo maximiza a soma das margens
+de contribuição, calculadas como preço de venda menos custos variáveis diretos
+de cada produto.
 
-\subsubsection{Objetivo -- Função Objetivo}
+Os parâmetros do modelo incluem os tempos de ciclo dos teares (com setup
+amortizado sobre o tamanho mínimo de lote contratual), os coeficientes de
+consumo de cada matéria-prima por lote e a disponibilidade semanal de cada
+recurso, calculada a partir dos dois turnos de trabalho menos paradas programadas.
 
-O modelo buscará \textbf{maximizar a margem de contribuição total} da fábrica
-por semana, definida como a soma das receitas de venda menos os custos
-variáveis diretos (fios, energia e insumos) de cada lote de tecido produzido.
+As restrições são de cinco tipos. A capacidade dos teares limita o total de
+horas de máquina utilizadas por semana. Os estoques de algodão, poliéster e
+elastano impõem limites ao consumo de cada insumo. A mão de obra disponível
+dos 30 funcionários restringe as horas-homem semanais, mesmo com margem para
+horas extras dentro dos limites da convenção coletiva. Os contratos de
+fornecimento impõem quantidades mínimas semanais para os dois forros. Por fim,
+os limites de demanda máxima de mercado definem o teto de produção para cada
+família.
 
-\subsubsection{Decisões -- Variáveis de Decisão}
+\subsection{Viabilidade do Projeto}
 
-A variável de decisão para cada família de produto $j$ é:
-\[
-  x_j = \text{quantidade de lotes de 100 metros a produzir por semana}
-\]
-
-\subsubsection{Dados da Realidade -- Parâmetros}
-
-\begin{itemize}
-  \item \textbf{Tempo de ciclo:} horas que um tear leva para produzir um lote de
-        100~m de cada tecido, incluindo o tempo de setup amortizado por lote
-        (com base no tamanho mínimo de lote contratual).
-  \item \textbf{Custos e preços:} custo por kg dos fios e preço de venda de cada
-        produto, negociados com fornecedores e clientes.
-  \item \textbf{Disponibilidade:} horas úteis totais por semana nos teares
-        (considerando os dois turnos, manutenção preventiva e eficiência operacional)
-        e estoques máximos de matéria-prima.
-\end{itemize}
-
-\subsubsection{Limites -- Restrições}
-
-\begin{itemize}
-  \item \textbf{Demanda mínima contratual:} produção semanal dos forros não pode
-        ser inferior às quantidades firmadas em contratos com clientes de longo
-        prazo.
-  \item \textbf{Demanda máxima de mercado:} produção de cada produto não pode
-        superar a demanda de mercado prevista para a semana.
-  \item \textbf{Capacidade de máquina:} total de horas de tear utilizadas não pode
-        superar as horas disponíveis, incluindo os tempos de setup.
-  \item \textbf{Matéria-prima e espaço:} volume de fios consumido não pode superar
-        o estoque disponível no almoxarifado (limitado por espaço físico e pelo
-        fornecimento semanal dos parceiros).
-  \item \textbf{Mão de obra:} horas-homem demandadas pelo plano não podem
-        superar a disponibilidade do quadro atual de 30 funcionários, mesmo com
-        previsão de horas extras dentro dos limites da convenção coletiva.
-\end{itemize}
-
-\subsection{Conclusão sobre a Viabilidade do Projeto}
-
-A modelagem do problema de mix de produção da Rentex como Programação Linear
-é viável e relevante. Os dados necessários (tempos de processo, custos, preços
-e capacidades) estão disponíveis no sistema de controle da empresa e serão
-levantados nas próximas etapas. A Rentex confirmou, por meio de seu Diretor de
-Novos Negócios, a disponibilidade de dados para o desenvolvimento do projeto.
-
-A formulação matemática completa e os primeiros resultados serão apresentados
-no Relatório 2.
+Os dados necessários para a formulação estão disponíveis no sistema de gestão
+da empresa: roteiros de fabricação, relatórios de capacidade, fichas de custo e
+histórico de pedidos. A Rentex confirmou, por intermédio de Pedro Charmillot
+Silva, a disponibilidade de acesso a essas informações durante o desenvolvimento
+do projeto. A formulação matemática completa e os primeiros resultados
+computacionais serão apresentados no Relatório~2.
 
 \subsection{Artigo de Referência}
 
@@ -156,38 +101,29 @@ na TOC para definição de mix de produção. \textit{Produção}, v.~23, n.~3,
 p.~468--477, jul./set. 2013.
 \end{quote}
 
-O artigo trata diretamente do problema de mix de produção com múltiplos recursos
-insuficientes e múltiplos produtos, que é exatamente a situação da Rentex. Os
-autores utilizam a Programação Linear Inteira como referência de otimalidade e
-propõem heurísticas construtivas baseadas na Teoria das Restrições (TOC) para
-problemas de maior escala. A formulação geral do artigo -- maximizar a soma das
-margens de contribuição sujeita a restrições de capacidade e demanda -- é
-idêntica à estrutura do modelo proposto para a Rentex. O artigo completo
-encontra-se no Anexo B.
-
+O artigo aborda o mesmo problema estrutural da Rentex: múltiplos produtos
+competindo por recursos produtivos insuficientes para atender toda a demanda,
+com objetivo de maximizar o ganho total. Os autores utilizam a solução ótima
+da Programação Linear Inteira como referência de qualidade e propõem heurísticas
+construtivas baseadas na Teoria das Restrições para instâncias de maior escala.
+A conexão com a metodologia adotada neste projeto é discutida em detalhe no
+Relatório~2. O artigo completo encontra-se no Anexo~B.
 
 \newpage
 
-
-
-
-
-\subsection*{Anexo A -- Carta de Aprovação da Empresa}
-
+\subsection*{Anexo A -- Autorização da Empresa}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.80\textwidth]{relatorio1/carta_empresa.pdf}
-\caption{Autorização emitida pela Rentex Indústria Têxtil LTDA.
-         Contém nome, cargo e telefone de contato do responsável,
-         Pedro Charmillot Silva, Diretor de Novos Negócios
-         (+55~11~99858-1812).}
+\caption{Autorização emitida pela Rentex Indústria Têxtil LTDA, contendo nome,
+         cargo e telefone de contato do responsável, Pedro Charmillot Silva,
+         Diretor de Novos Negócios (+55~11~99858-1812).}
 \end{figure}
 
 \newpage
 
 \subsection*{Anexo B -- Artigo de Referência}
-
 
 \foreach \pg in {1,2,3,4,5,6,7,8,9,10}{%
   \includegraphics[width=\textwidth, page=\pg]{relatorio1/artigo_referencia.pdf}%
