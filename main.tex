@@ -1,18 +1,21 @@
 \documentclass[12pt, a4paper]{article}
 
-% ─── Pacotes essenciais ───────────────────────────────────────────────────────
+%──────────────────────────────────────────────────────────────────────────────
+%  PACOTES
+%──────────────────────────────────────────────────────────────────────────────
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[brazil]{babel}
-\usepackage{lmodern}
 
 % Layout
 \usepackage[top=3cm, bottom=2cm, left=3cm, right=2cm]{geometry}
 \usepackage{setspace}
 \onehalfspacing
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0pt}
 
 % Matemática
-\usepackage{amsmath, amssymb, amsthm}
+\usepackage{amsmath, amssymb}
 
 % Figuras e tabelas
 \usepackage{graphicx}
@@ -21,65 +24,80 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
 
-% Algoritmos / código
-\usepackage{algorithm}
-\usepackage{algpseudocode}
+% Código-fonte
 \usepackage{listings}
 \usepackage{xcolor}
 
-% Referências e links
-\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
-\usepackage[backend=biber, style=abnt]{biblatex}
+% Links
+\usepackage[colorlinks=true, linkcolor=black, citecolor=black, urlcolor=blue]{hyperref}
+
+% Referências ABNT
+\usepackage[backend=biber, style=abnt, ittitles]{biblatex}
 \addbibresource{referencias.bib}
 
 % Outros
 \usepackage{enumitem}
-\usepackage{multirow}
-\usepackage{array}
-\usepackage{pdflscape}
-\usepackage{lipsum}   % remover no documento final
+\usepackage{indentfirst}
+\usepackage{microtype}
 
-% ─── Configuração de listings ─────────────────────────────────────────────────
+%──────────────────────────────────────────────────────────────────────────────
+%  CONFIGURAÇÃO DE LISTINGS (Python)
+%──────────────────────────────────────────────────────────────────────────────
+\definecolor{codebg}{RGB}{245,245,245}
+\definecolor{codecomment}{RGB}{100,100,100}
+\definecolor{codestring}{RGB}{163,21,21}
+\definecolor{codekw}{RGB}{0,0,200}
+
 \lstset{
+  language=Python,
+  backgroundcolor=\color{codebg},
   basicstyle=\ttfamily\small,
-  keywordstyle=\color{blue}\bfseries,
-  commentstyle=\color{gray},
-  stringstyle=\color{orange},
+  keywordstyle=\color{codekw}\bfseries,
+  commentstyle=\color{codecomment}\itshape,
+  stringstyle=\color{codestring},
   numbers=left,
-  numberstyle=\tiny,
+  numberstyle=\tiny\color{gray},
+  numbersep=8pt,
   frame=single,
+  rulecolor=\color{gray!40},
   breaklines=true,
   captionpos=b,
+  showstringspaces=false,
+  tabsize=4,
+  inputencoding=utf8,
+  extendedchars=true,
+  literate=
+    {á}{{\'a}}1 {ã}{{\~a}}1 {â}{{\^a}}1 {à}{{\`a}}1
+    {é}{{\'e}}1 {ê}{{\^e}}1
+    {í}{{\'i}}1
+    {ó}{{\'o}}1 {õ}{{\~o}}1 {ô}{{\^o}}1
+    {ú}{{\'u}}1 {ü}{{\"u}}1
+    {ç}{{\c{c}}}1
+    {Á}{{\'A}}1 {Ã}{{\~A}}1
+    {É}{{\'E}}1 {Ê}{{\^E}}1
+    {Í}{{\'I}}1
+    {Ó}{{\'O}}1 {Ô}{{\^O}}1
+    {Ú}{{\'U}}1
+    {Ç}{{\c{C}}}1,
 }
 
-% ─── Dados do projeto ─────────────────────────────────────────────────────────
-\newcommand{\disciplina}{PRO3341 -- Modelagem e Otimização de Sistemas de Produção}
-\newcommand{\professora}{Prof\textsuperscript{a}. Dra. Celma O. Ribeiro}
-\newcommand{\semestre}{1\textsuperscript{o} Semestre de 2026}
-\newcommand{\tituloProj}{[Título do Projeto]}   % ← preencher
-\newcommand{\empresa}{[Nome da Empresa]}         % ← preencher
-\newcommand{\grupoA}{Aluno 1}                    % ← preencher
-\newcommand{\grupoB}{Aluno 2}
-\newcommand{\grupoC}{Aluno 3}
-\newcommand{\grupoD}{Aluno 4}                    % remover se grupo de 3
-
-% ─── Documento ────────────────────────────────────────────────────────────────
+%──────────────────────────────────────────────────────────────────────────────
+%  DOCUMENTO
+%──────────────────────────────────────────────────────────────────────────────
 \begin{document}
 
-% Capa
 \input{capa}
 
-% Sumário
 \tableofcontents
 \newpage
 
-% Relatórios — descomente conforme entrega
 \input{relatorio1/relatorio1}
 %\input{relatorio2/relatorio2}
 %\input{relatorio3/relatorio3}
 
-% Referências
 \printbibliography[heading=bibintoc, title={Referências}]
 
 \end{document}
