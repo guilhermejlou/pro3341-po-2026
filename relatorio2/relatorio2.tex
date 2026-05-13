@@ -383,3 +383,294 @@ if __name__ == '__main__':
 \end{lstlisting}
 
 \newpage
+\subsection{Primeiros Resultados}
+\label{sec:resultados_r2}
+
+Os resultados são apresentados para o cenário-base ($\rho_3 = 200$ R\$/lote,
+$\rho_4 = 300$ R\$/lote), com análise de sensibilidade aos valores de $\rho$
+na seção seguinte.
+
+\subsubsection{Solução Ótima -- Cenário-Base}
+
+\begin{table}[H]
+\centering
+\caption{Plano de produção ótimo -- cenário-base ($\rho_3=200$, $\rho_4=300$)}
+\label{tab:sol_base}
+\begin{tabular}{llrrrrr}
+\toprule
+\textbf{$j$} & \textbf{Produto} & \textbf{$x_j^*$} & \textbf{$d^{\min}$} & \textbf{$d^{\text{pref}}$} & \textbf{$d^{\max}$} & \textbf{MC total (R\$)} \\
+\midrule
+1 & Sarja Barcelos   & 200,0 &   0 & --- & 200 & 140.000,00 \\
+2 & Sarja Joy        &  80,0 &   0 & --- &  80 &  80.000,00 \\
+3 & Forro Padrão     & 130,0 &  60 & 130 & 160 &  28.600,00 \\
+4 & Forro Premium    &  47,1 &  20 &  45 &  60 &  16.500,00 \\
+\midrule
+  & \textbf{Shortfalls} & & & & & \\
+  & $s_3^-$ (Forro Padrão)  & 0,0 & & & & --- \\
+  & $s_4^-$ (Forro Premium) & 0,0 & & & & --- \\
+\midrule
+  & \textbf{Total} & \textbf{457,1} & & & & \textbf{265.100,00} \\
+\bottomrule
+\multicolumn{7}{l}{\footnotesize $Z^* = \text{R\$}~265.100,00$/semana (MC bruta R\$265.100, penalidade R\$0,00).}
+\end{tabular}
+\end{table}
+
+No cenário-base, o modelo honra o nível preferido do Forro Padrão (130 lotes)
+e quase totaliza o preferido do Forro Premium (47,1 vs.\ 45 preferido). O Forro
+Premium é produzido ligeiramente acima do preferido porque a capacidade de tear
+restante -- após alocar Barcelos, Joy e Forro Padrão -- é suficiente para 47,1
+lotes, e o modelo usa tudo que está disponível para esse produto de margem positiva.
+
+\subsubsection{Utilização dos Recursos}
+
+\begin{table}[H]
+\centering
+\caption{Utilização dos recursos no cenário-base}
+\label{tab:util_base}
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{Recurso} & \textbf{Uso} & \textbf{Capacidade} & \textbf{Folga} & \textbf{Ocup. (\%)} \\
+\midrule
+Teares (h)            & 380,0  & 380   &   0,0   & \textbf{100,0\%} \\
+Fio algodão (kg)      & 346,0  & 400   &  54,0   & 86,5\% \\
+Fio poliéster (kg)    & 301,6  & 500   & 198,4   & 60,3\% \\
+Elastano (kg)         &  9,4   &  12   &   2,6   & 78,2\% \\
+Mão de obra (h)       & 181,0  & 1.200 & 1.019,0 & 15,1\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+O recurso Teares permanece como único gargalo ativo (100\% de ocupação, folga nula).
+Os demais recursos apresentam folgas expressivas, confirmando que qualquer aumento
+de produção depende exclusivamente de expansão da capacidade de tear.
+
+\newpage
+
+\subsection{Análise Preliminar}
+\label{sec:analise_r2}
+
+\subsubsection{A Pergunta Central: Qual o Custo de Honrar o Nível Preferido?}
+
+A análise comparativa entre dois pontos específicos da fronteira de decisão
+revela o custo financeiro de semana manter o relacionamento com o cliente de
+Forro Padrão:
+
+\begin{table}[H]
+\centering
+\caption{Comparação: honrar vs. não honrar o nível preferido do Forro Padrão}
+\label{tab:comparacao_pref}
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{Variável} & \textbf{Não honrar ($\rho_3 = 0$)} & \textbf{Honrar ($\rho_3 \geq 30$)} & \textbf{Diferença} \\
+\midrule
+Forro Padrão ($x_3$)   & 112,0 & 130,0 & $+18,0$ lotes \\
+Forro Premium ($x_4$)  &  60,0 &  47,1 & $-12,9$ lotes \\
+MC bruta total         & R\$\,265.640 & R\$\,265.100 & $-\text{R\$}\,540$ \\
+Horas de tear utilizadas & 380,0 h & 380,0 h & 0 h \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+O custo financeiro semanal de honrar o nível preferido do Forro Padrão é de
+\textbf{R\$\,540/semana}, ou \textbf{R\$\,25.920/ano} (48 semanas úteis). Esse
+é o montante que a Rentex ``paga'' ao sacrificar 12,9 lotes de Forro Premium
+(margem R\$\,350/lote) para produzir 18 lotes adicionais de Forro Padrão
+(margem R\$\,220/lote).
+
+O mecanismo é: os teares estão saturados, então cada hora adicional alocada ao
+Forro Padrão ($a_{1,3} = 0{,}50$ h/lote) precisa vir de outro produto. A melhor
+alternativa disponível com capacidade não esgotada é o Forro Premium
+($a_{1,4} = 0{,}70$ h/lote, margem R\$\,350/lote): para produzir 1 lote adicional
+de Forro Padrão (usando 0,50 h), o modelo reduz 0,71 lotes de Forro Premium
+($0{,}50/0{,}70 = 0{,}71$), perdendo $0{,}71 \times 350 - 1 \times 220 = 249 - 220 = \text{R\$}\,29$ de MC.
+
+\subsubsection{Fronteira de Decisão: Threshold de $\rho_3$}
+
+O modelo passa a honrar o nível preferido do Forro Padrão assim que a penalidade
+supera o custo de oportunidade:
+
+\begin{table}[H]
+\centering
+\caption{Fronteira de decisão: $\rho_3$ e decisão do modelo}
+\label{tab:frontier}
+\begin{tabular}{rccrl}
+\toprule
+\textbf{$\rho_3$ (R\$/lote)} & \textbf{$x_3^*$} & \textbf{$s_3^-$} & \textbf{$Z_{\text{liq}}$ (R\$)} & \textbf{Decisão} \\
+\midrule
+ 0  & 112,0 & 18,0 & 265.640,00 & Não honrar -- shortfall de 18 lotes \\
+25  & 112,0 & 18,0 & 265.190,00 & Não honrar -- penalidade R\$450/sem \\
+\textbf{30} & \textbf{130,0} & \textbf{0,0} & \textbf{265.100,00} & \textbf{Honrar -- threshold atingido} \\
+50  & 130,0 & 0,0 & 265.100,00 & Honrar \\
+200 & 130,0 & 0,0 & 265.100,00 & Honrar \\
+500 & 130,0 & 0,0 & 265.100,00 & Honrar \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+O threshold é \textbf{$\rho_3^* = \text{R\$}\,30/\text{lote}$}: se a penalidade
+por lote de shortfall no Forro Padrão for de pelo menos R\$\,30, o modelo recomenda
+produzir 130 lotes (honrar o preferido). Abaixo desse valor, recomenda produzir
+112 lotes e aceitar o shortfall.
+
+Em termos gerenciais: \textit{se a probabilidade de perda do cliente de Forro Padrão
+por semana de subatendimento for de pelo menos
+$30 / (\text{receita anual do cliente}/52) = 30 \times 52 / V_3$,
+então vale honrar o nível preferido}. Para um cliente cujo contrato anual
+vale R\$\,400.000, essa probabilidade de ponto de indiferença é de apenas
+$30 \times 52 / 400.000 = 0{,}4\%$ por semana, um nível extremamente baixo
+que torna quase sempre justificável honrar o contrato preferido.
+
+\subsubsection{Análise de Cenários: o Valor das Parcerias}
+
+A Tabela~\ref{tab:cenarios} consolida três cenários de percepção de risco
+de relacionamento e seus respectivos planos ótimos.
+
+\begin{table}[H]
+\centering
+\caption{Análise de cenários de risco de relacionamento}
+\label{tab:cenarios}
+\begin{tabular}{lcccccr}
+\toprule
+\textbf{Cenário} & \textbf{$\rho_3$} & \textbf{$\rho_4$} & \textbf{$x_3^*$} & \textbf{$x_4^*$} & \textbf{$s_3^-$} & \textbf{Z liq. (R\$)} \\
+\midrule
+Sem risco (contratos novos) & 0   & 0   & 112 & 60   & 18 & 265.640 \\
+Risco baixo                 & 50  & 100 & 130 & 47,1 &  0 & 265.100 \\
+Risco moderado              & 200 & 300 & 130 & 47,1 &  0 & 265.100 \\
+Risco alto (históricos)     & 500 & 700 & 130 & 47,1 &  0 & 265.100 \\
+\bottomrule
+\multicolumn{7}{l}{\footnotesize Acima do threshold ($\rho_3 \geq 30$, $\rho_4 \geq 15$), o plano ótimo é invariante ao nível de risco.}
+\end{tabular}
+\end{table}
+
+Um resultado relevante: acima do threshold, o plano de produção é idêntico
+independentemente do nível de $\rho$. Isso significa que, a partir do momento
+em que os gestores concordam que a perda do cliente teria custo anual superior
+a R\$\,25.920 (um threshold muito baixo para qualquer cliente contratual da Rentex),
+o plano ótimo é único e bem definido. A análise de cenários não altera a decisão
+de produção -- ela justifica e quantifica por que a decisão é essa.
+
+\subsubsection{Análise de Sensibilidade: Capacidade dos Teares}
+
+A Tabela~\ref{tab:rang_tear} apresenta o impacto de variações na capacidade dos
+teares sobre a margem de contribuição líquida, no cenário-base ($\rho_3 = 200$,
+$\rho_4 = 300$).
+
+\begin{table}[H]
+\centering
+\caption{Ranging do RHS -- Teares (cenário-base)}
+\label{tab:rang_tear}
+\begin{tabular}{rrrrr}
+\toprule
+\textbf{Teares (h)} & \textbf{$x_3^*$} & \textbf{$x_4^*$} & \textbf{$Z_{\text{liq}}$ (R\$)} & \textbf{$\Delta Z$ (R\$)} \\
+\midrule
+300 & 130,0 & 45,0 & 208.278,57 &  $-56.821,43$ \\
+320 & 130,0 & 45,0 & 222.564,29 &  $-42.535,71$ \\
+340 & 130,0 & 45,0 & 236.850,00 &  $-28.250,00$ \\
+360 & 130,0 & 45,0 & 251.135,71 &  $-13.964,29$ \\
+\textbf{380} & \textbf{130,0} & \textbf{47,1} & \textbf{265.100,00} & \textbf{---} \\
+400 & 152,0 & 60,0 & 274.440,00 &   $+9.340,00$ \\
+420 & 160,0 & 60,0 & 276.200,00 &  $+11.100,00$ \\
+440 & 160,0 & 60,0 & 276.200,00 &  $+11.100,00$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Acima de 420~h, a demanda máxima dos forros ($d_3^{\max} = 160$, $d_4^{\max} = 60$)
+passa a ser a restrição limitante, e o ganho marginal de tear cai a zero. O
+preço-sombra dos teares é de R\$\,714,29/h no trecho de 300 a 380 h
+($\Delta Z / \Delta b_1 = 14.285/20 = 714{,}3$), confirmando que uma hora de
+tear extra nesse intervalo vale mais do que o dobro do custo de uma hora extra
+de mão de obra, o que justifica investimento em horas extras ou manutenção
+preventiva de teares.
+
+\subsubsection{Eficiência por Gargalo e Conexão com a TOC}
+
+Seguindo o índice $e_j = \mathrm{MC}_j / a_{1j}$ proposto por \textcite{sobreiro2013},
+a prioridade de alocação no gargalo é:
+
+\begin{table}[H]
+\centering
+\caption{Eficiência dos produtos em relação ao gargalo (Teares)}
+\label{tab:efic}
+\begin{tabular}{llrrr}
+\toprule
+\textbf{Posto} & \textbf{Produto} & \textbf{MC$_j$} & \textbf{$a_{1j}$ (h/lote)} & \textbf{$e_j$ (R\$/h)} \\
+\midrule
+1 & Sarja Barcelos  &  700 & 0,85 & \textbf{823,53} \\
+2 & Sarja Joy       & 1000 & 1,40 & \textbf{714,29} \\
+3 & Forro Premium   &  350 & 0,70 & \textbf{500,00} \\
+4 & Forro Padrão    &  220 & 0,50 & \textbf{440,00} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+O resultado revela uma das contribuições práticas do modelo: a Sarja Barcelos,
+com margem unitária de R\$\,700 (a menor entre as sarjas), é \textit{o produto
+mais lucrativo por hora de tear}. Isso contradiz a intuição do gerente de produção
+que prioriza produtos pelo valor unitário -- a Sarja Joy tem margem unitária 43\%
+superior, mas é 13\% menos eficiente no gargalo. Sem o modelo, essa inversão
+permaneceria oculta.
+
+\subsubsection{Comparação com o Plano Atual da Empresa}
+
+Com base nas informações coletadas junto ao PCP, o plano praticado em março de
+2026 era:
+
+\begin{table}[H]
+\centering
+\caption{Comparação entre plano atual e plano ótimo}
+\label{tab:comp_planos}
+\begin{tabular}{llrrr}
+\toprule
+\textbf{$j$} & \textbf{Produto} & \textbf{Plano atual} & \textbf{Plano ótimo} & \textbf{Diferença} \\
+\midrule
+1 & Sarja Barcelos  &  90 & 200 & $+110$ lotes \\
+2 & Sarja Joy       &  30 &  80 &  $+50$ lotes \\
+3 & Forro Padrão    & 140 & 130 &  $-10$ lotes \\
+4 & Forro Premium   &  30 &  47 &  $+17$ lotes \\
+\midrule
+\multicolumn{2}{l}{\textbf{Horas de tear usadas}}       & 264,5 h & 380,0 h & $+115,5$ h \\
+\multicolumn{2}{l}{\textbf{MC bruta (R\$/semana)}}      & 154.500 & 265.100 & $+110.600$ \\
+\multicolumn{2}{l}{\textbf{Ganho potencial (\%)}}       &         &         & \textbf{+71,6\%} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+O ganho potencial de R\$\,110.600/semana tem dois componentes:
+
+\begin{enumerate}[label=\textbf{(\alph*)}]
+  \item \textbf{Subutilização dos teares} (115,5~h ociosas por semana, ao preço-sombra
+        de R\$\,714/h): potencial de R\$\,82.468/semana não aproveitado.
+
+  \item \textbf{Mix subótimo} (mesmo com os teares plenamente utilizados, a alocação
+        atual favorece Forro Padrão em detrimento das sarjas, que têm maior
+        eficiência por hora de tear): potencial adicional de R\$\,28.132/semana.
+\end{enumerate}
+
+O componente (a) é mais relevante e indica que a empresa opera com cerca de
+30\% da capacidade de tear ociosa -- provavelmente por falta de carteira de
+pedidos, e não por incapacidade produtiva. Esse ponto será aprofundado no
+Relatório 3, com discussão sobre estratégias comerciais para ocupar essa capacidade.
+
+\subsection{Limitações e Próximas Etapas}
+
+O Relatório 3 endereçará as seguintes extensões:
+
+\begin{enumerate}[label=\textbf{(\roman*)}]
+  \item \textbf{Calibração dos parâmetros $\rho_j$} com dados de churn de clientes
+        e valoração dos contratos, para que os cenários sejam baseados em
+        estimativas formais e não em valores ilustrativos.
+
+  \item \textbf{Análise de sensibilidade completa} com intervalos exatos de ranging
+        para todos os coeficientes da FO e do RHS, incluindo o impacto de variações
+        no custo do fio de poliéster (insumo mais volátil) e nos preços das sarjas.
+
+  \item \textbf{Validação dos dados do plano atual} com registros formais de sistema,
+        para confirmar as 264,5~h de tear ociosas reportadas pela equipe de PCP.
+
+  \item \textbf{Análise de estratégias comerciais}: dado que a subutilização dos
+        teares é o maior componente do gap, discutir quais ações de prospecção de
+        pedidos ou de revisão do portfólio poderiam ocupar essa capacidade ociosa.
+\end{enumerate}
+
+\newpage
